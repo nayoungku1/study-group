@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>등록된 스터디 보기</title>
+    <style>
+        body {
+            font-family: 'Arial', 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .profile-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .profile-photo {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 2px solid #ddd;
+        }
+        .keyword-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .keyword {
+            background-color: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            color: #333;
+        }
+        p {
+            margin: 10px 0;
+            color: #666;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-align: center;
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            .profile-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            .profile-photo {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>등록된 스터디 정보</h2>
+        <div class="profile-section">
+            <div class="profile-photo">
+                <img id="profile-image" src="" alt="커버 사진">
+            </div>
+            <div class="profile-details">
+                <label>스터디 이름</label>
+                <p id="groupname"></p>
+                <br>
+
+                <label>스터디 카테고리</label>
+                <p id="category"></p>
+                <br>
+
+                <label>스터디 키워드</label>
+                <div id="keyword-container" class="keyword-container"></div>
+                <br>
+            </div>
+        </div>
+
+        <label>스터디 설명 (목적 등)</label>
+        <p id="summary"></p>
+
+        <label>이런 스터디원을 구합니다! 🙌</label>
+        <p id="recruit"></p>
+
+        <p style="text-align: center;">
+            <a href="register.html">스터디 등록 페이지로 돌아가기</a>
+        </p>
+    </div>
+
+    <script>
+        // localStorage에서 데이터 불러오기
+        const studyData = JSON.parse(localStorage.getItem('studyData') || '{}');
+        const profileImage = localStorage.getItem('profileImage') || 'profilephoto.jpg';
+
+        // 데이터 표시
+        document.getElementById('profile-image').src = profileImage;
+        document.getElementById('groupname').textContent = studyData.groupname || '정보 없음';
+        document.getElementById('category').textContent = studyData.category || '정보 없음';
+        document.getElementById('summary').textContent = studyData.summary || '정보 없음';
+        document.getElementById('recruit').textContent = studyData.recruit || '정보 없음';
+
+        // 키워드 표시
+        const keywords = studyData.keywords ? studyData.keywords.split(',') : [];
+        const keywordContainer = document.getElementById('keyword-container');
+        keywords.forEach(keyword => {
+            if (keyword) {
+                const keywordDiv = document.createElement('div');
+                keywordDiv.className = 'keyword';
+                keywordDiv.textContent = `#${keyword}`;
+                keywordContainer.appendChild(keywordDiv);
+            }
+        });
+
+        // 데이터가 없는 경우 알림
+        if (!studyData.groupname) {
+            alert('저장된 스터디 정보가 없습니다. 먼저 스터디를 등록해주세요.');
+        }
+    </script>
+</body>
+</html>
