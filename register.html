@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스터디 그룹 등록</title>
+    <style>
+        body {
+            font-family: 'Arial', 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .profile-photo {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 2px solid #ddd;
+        }
+        .upload-option {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .upload-option:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        input[type="submit"],
+        input[type="reset"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        input[type="reset"] {
+            background-color: #6c757d;
+            color: white;
+        }
+        input[type="reset"]:hover {
+            background-color: #5a6268;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            color: #333;
+        }
+        p {
+            margin: 10px 0;
+        }
+        .description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            .profile-photo {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>스터디 그룹 등록하기</h2>
+        <p class="description">내게 필요한 스터디 그룹이 아직 없다면, 만들어보는 건 어떨까요?</p>
+        <form>
+            <div class="profile-photo">
+                <img id="profile-image" src="studygroup.jpg" alt="커버 사진">
+                <div class="upload-option" onclick="document.getElementById('profile-upload').click()">
+                    사진 다시 업로드
+                    <input type="file" id="profile-upload" accept="image/*" onchange="previewImage(event)">
+                </div>
+            </div>
+            <label for="groupname">스터디 이름</label>
+            <input type="text" id="groupname" name="groupname" required>
+
+            <label for="category">카테고리 지정</label>
+            <select id="category" name="category" required>
+                <option value="" disabled selected>== 스터디 카테고리 ==</option>
+                <option value="certificate">자격증</option>
+                <option value="language">외국어 공부</option>
+                <option value="hobby">취미</option>
+                <option value="major">전공 공부</option>
+            </select>
+
+            <label for="summary">스터디 설명 (목적 등)</label>
+            <textarea id="summary" name="summary" placeholder="스터디의 목적과 간단한 설명을 작성해주세요." required></textarea>
+
+            <label for="recruit">이런 스터디원 구합니다! 🙌</label>
+            <textarea id="recruit" name="recruit" placeholder="원하는 스터디원의 특징을 작성해주세요." required></textarea>
+
+            <p>
+                <input type="submit" value="등록하기">
+                <input type="reset" value="초기화">
+            </p>
+        </form>
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('profile-image');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>
