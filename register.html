@@ -171,7 +171,7 @@
         <p class="description">내게 필요한 스터디 그룹이 아직 없다면, 직접 만들어보는 건 어떨까요? 👀✨ </p>
         <hr>
         <br>
-        <form>
+        <form id="study-form">
             <div class="profile-section">
                 <div class="profile-photo">
                     <img id="profile-image" src="img/studygroup.jpg" alt="커버 사진">
@@ -221,10 +221,11 @@
             reader.onload = function() {
                 const output = document.getElementById('profile-image');
                 output.src = reader.result;
+                // 이미지 데이터를 localStorage에 저장
+                localStorage.setItem('profileImage', reader.result);
             };
             reader.readAsDataURL(event.target.files[0]);
         }
-
         function addKeyword(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
@@ -234,7 +235,7 @@
                     const container = document.getElementById('keyword-container');
                     const keywordDiv = document.createElement('div');
                     keywordDiv.className = 'keyword';
-                    keywordDiv.innerHTML = `<span>#${keyword}</span><span class="remove" onclick="removeKeyword(this)">x</span>`;
+                    keywordDiv.innerHTML = `<span># ${keyword}</span><span class="remove" onclick="removeKeyword(this)">x</span>`;
                     container.appendChild(keywordDiv);
                     updateKeywords();
                     input.value = '';
@@ -254,6 +255,21 @@
                 .join(',');
             document.getElementById('keywords').value = keywords;
         }
+        document.getElementById('study-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // 기본 폼 제출 동작 방지
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            // 데이터가 비어 있는지 확인
+            if (!data.groupname || !data.category || !data.summary || !data.recruit) {
+                alert('모든 필드를 채워주세요!');
+                return;
+            }
+
+            // localStorage에 저장
+            localStorage.setItem('studyData', JSON.stringify(data));
+            alert('스터디 정보가 로컬에 저장되었습니다! "등록된 스터디 보기" 링크를 클릭하여 확인하세요.');
+        });
     </script>
 </body>
 </html>
