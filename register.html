@@ -13,10 +13,10 @@
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
-            background-color: #f4f4f9;
+            background-color: #f0f0f0;
         }
         .container {
-            max-width: 600px;
+            max-width: 900px;
             width: 100%;
             background: white;
             padding: 30px;
@@ -27,13 +27,19 @@
             text-align: center;
             color: #333;
         }
+        .profile-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
         .profile-photo {
             width: 200px;
             height: 200px;
-            margin: 20px auto;
             position: relative;
             overflow: hidden;
             border-radius: 10px;
+            flex-shrink: 0;
         }
         .profile-photo img {
             width: 100%;
@@ -56,6 +62,9 @@
         .upload-option:hover {
             background: rgba(0, 0, 0, 0.8);
         }
+        .profile-details {
+            flex-grow: 1;
+        }
         input[type="text"],
         select,
         textarea {
@@ -65,6 +74,34 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
+            box-sizing: border-box;
+        }
+        .keyword-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .keyword {
+            background-color: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        .keyword span {
+            margin-right: 8px;
+        }
+        .keyword .remove {
+            cursor: pointer;
+            color: #dc3545;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        #keyword-input {
+            width: 150px;
+            padding: 5px;
         }
         textarea {
             height: 100px;
@@ -114,9 +151,16 @@
             .container {
                 padding: 15px;
             }
+            .profile-section {
+                flex-direction: column;
+                align-items: center;
+            }
             .profile-photo {
-                width: 150px;
-                height: 150px;
+                width: 120px;
+                height: 120px;
+            }
+            .profile-details {
+                width: 100%;
             }
         }
     </style>
@@ -124,32 +168,45 @@
 <body>
     <div class="container">
         <h2>스터디 그룹 등록하기</h2>
-        <p class="description">내게 필요한 스터디 그룹이 아직 없다면, 만들어보는 건 어떨까요?</p>
+        <p class="description">내게 필요한 스터디 그룹이 아직 없다면, 직접 만들어보는 건 어떨까요? 👀✨ </p>
+        <hr>
+        <br>
         <form>
-            <div class="profile-photo">
-                <img id="profile-image" src="studygroup.jpg" alt="커버 사진">
-                <div class="upload-option" onclick="document.getElementById('profile-upload').click()">
-                    사진 다시 업로드
-                    <input type="file" id="profile-upload" accept="image/*" onchange="previewImage(event)">
+            <div class="profile-section">
+                <div class="profile-photo">
+                    <img id="profile-image" src="img/studygroup.jpg" alt="커버 사진">
+                    <div class="upload-option" onclick="document.getElementById('profile-upload').click()">
+                        사진 다시 업로드
+                        <input type="file" id="profile-upload" accept="image/*" onchange="previewImage(event)">
+                    </div>
+                </div>
+                <div class="profile-details">
+                    <label for="groupname">스터디 이름</label>
+                    <input type="text" id="groupname" name="groupname" placeholder="스터디 이름을 입력하세요" required>
+
+                    <label for="category">스터디 카테고리</label>
+                    <select id="category" name="category" required>
+                        <option value="" disabled selected>== 스터디 카테고리 ==</option>
+                        <option value="certificate">자격증</option>
+                        <option value="language">외국어 공부</option>
+                        <option value="hobby">취미</option>
+                        <option value="major">전공 공부</option>
+                    </select>
+
+                    <label for="keyword-input">스터디 키워드</label>
+                    <div>
+                        <input type="text" id="keyword-input" placeholder="키워드를 입력 후 Enter" onkeypress="addKeyword(event)">
+                        <div id="keyword-container" class="keyword-container"></div>
+                        <input type="hidden" id="keywords" name="keywords">
+                    </div>
                 </div>
             </div>
-            <label for="groupname">스터디 이름</label>
-            <input type="text" id="groupname" name="groupname" required>
 
-            <label for="category">카테고리 지정</label>
-            <select id="category" name="category" required>
-                <option value="" disabled selected>== 스터디 카테고리 ==</option>
-                <option value="certificate">자격증</option>
-                <option value="language">외국어 공부</option>
-                <option value="hobby">취미</option>
-                <option value="major">전공 공부</option>
-            </select>
-
-            <label for="summary">스터디 설명 (목적 등)</label>
+            <label for="summary">스터디 설명 📝 </label>
             <textarea id="summary" name="summary" placeholder="스터디의 목적과 간단한 설명을 작성해주세요." required></textarea>
 
-            <label for="recruit">이런 스터디원 구합니다! 🙌</label>
-            <textarea id="recruit" name="recruit" placeholder="원하는 스터디원의 특징을 작성해주세요." required></textarea>
+            <label for="recruit">이런 스터디원을 구합니다! 🙌</label>
+            <textarea id="recruit" name="recruit" placeholder="어떤 사람이 참여하면 좋을지, 특징을 작성해주세요." required></textarea>
 
             <p>
                 <input type="submit" value="등록하기">
@@ -166,6 +223,36 @@
                 output.src = reader.result;
             };
             reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function addKeyword(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const input = document.getElementById('keyword-input');
+                const keyword = input.value.trim();
+                if (keyword) {
+                    const container = document.getElementById('keyword-container');
+                    const keywordDiv = document.createElement('div');
+                    keywordDiv.className = 'keyword';
+                    keywordDiv.innerHTML = `<span>#${keyword}</span><span class="remove" onclick="removeKeyword(this)">x</span>`;
+                    container.appendChild(keywordDiv);
+                    updateKeywords();
+                    input.value = '';
+                }
+            }
+        }
+
+        function removeKeyword(element) {
+            const keywordDiv = element.parentElement;
+            keywordDiv.remove();
+            updateKeywords();
+        }
+
+        function updateKeywords() {
+            const keywords = Array.from(document.querySelectorAll('.keyword span'))
+                .map(span => span.textContent.replace('#', ''))
+                .join(',');
+            document.getElementById('keywords').value = keywords;
         }
     </script>
 </body>
