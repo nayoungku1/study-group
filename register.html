@@ -168,7 +168,7 @@
 <body>
     <div class="container">
         <h2>스터디 그룹 등록하기</h2>
-        <p class="description">내게 필요한 스터디 그룹이 아직 없다면, 직접 만들어보는 건 어떨까요? 👀✨ </p>
+        <p class="description">내게 딱맞는 스터디 그룹이 아직 없다면, 직접 만들어보는 건 어떨까요? 👀✨ </p>
         <hr>
         <br>
         <form id="study-form">
@@ -177,7 +177,7 @@
                     <img id="profile-image" src="img/studygroup.jpg" alt="커버 사진">
                     <div class="upload-option" onclick="document.getElementById('profile-upload').click()">
                         사진 다시 업로드
-                        <input type="file" id="profile-upload" accept="image/*" onchange="previewImage(event)">
+                        <input type="file" id="profile-upload" name="profile-upload" accept="image/*" onchange="previewImage(event)">
                     </div>
                 </div>
                 <div class="profile-details">
@@ -235,7 +235,7 @@
                     const container = document.getElementById('keyword-container');
                     const keywordDiv = document.createElement('div');
                     keywordDiv.className = 'keyword';
-                    keywordDiv.innerHTML = `<span># ${keyword}</span><span class="remove" onclick="removeKeyword(this)">x</span>`;
+                    keywordDiv.innerHTML = `<span class="keyword-text"># ${keyword}</span><span class="remove" onclick="removeKeyword(this)">x</span>`;
                     container.appendChild(keywordDiv);
                     updateKeywords();
                     input.value = '';
@@ -250,10 +250,12 @@
         }
 
         function updateKeywords() {
-            const keywords = Array.from(document.querySelectorAll('.keyword span'))
-                .map(span => span.textContent.replace('#', ''))
+            const keywords = Array.from(document.querySelectorAll('.keyword .keyword-text'))
+                .map(span => span.textContent.replace('#', '').trim())
+                .filter(keyword => keyword)
                 .join(',');
             document.getElementById('keywords').value = keywords;
+            console.log('Keywords updated:', keywords); // 디버깅용 로그
         }
         document.getElementById('study-form').addEventListener('submit', function(e) {
             e.preventDefault(); // 기본 폼 제출 동작 방지
