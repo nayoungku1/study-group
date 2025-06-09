@@ -1,212 +1,100 @@
-* { box-sizing: border-box; }
-    body { margin: 0; font-family: sans-serif; display: flex;}
+* {
+  box-sizing: border-box;
+}
 
-    .sidebar {
-      width: 200px;
-      background-color: #fcfcfc;
-      padding: 20px;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      border-right: 1px solid #ccc;
-      position: fixed;
-      top: 0;
-      left: -200px; /* 처음에는 화면 밖으로 숨김 */
-      transition: left 0.3s ease;
-      z-index: 2000;
-    }
-    .sidebar.active {
-      left: 0; /* 나타나게 함 */
-    }
-    .sidebar-toggle-btn {
-      margin-top: 11px;
-      font-size: 11px;
-      background-color: transparent;
-      border: 1px solid #7987FF;
-      border-radius: 4px;
-      color: #3745B6;
-      cursor: pointer;
-      padding: 4px 10px;
-    }
-   
-    .sidebar .profile-photo {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      margin-bottom: 20px;
-      overflow: hidden;
-      position: relative;
-    }
-    .sidebar .profile-photo img {
-      width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
-    }
-    .sidebar .profile-photo:hover .upload-option { display: block; }
-    .sidebar .upload-option {
-      display: none; position: absolute; top:0; left:0; width:100%; height:100%;
-      background: rgba(0,0,0,0.5); color: #fff; text-align:center; line-height:70px; font-size:13px; cursor:pointer;
-    }
-    .sidebar .upload-option input {
-      opacity: 0; width: 100%; height: 100%; cursor: pointer; position:absolute; left:0; top:0;
-    }
-    .sidebar h3 { margin: 10px 0 18px 0; }
-    .sidebar ul { list-style: none; padding: 0; width: 100%; }
-    .sidebar li {
-      margin: 10px 0; padding: 10px 0 10px 8px; background-color: #e0e0e0;
-      border-radius: 5px; transition: background .15s;
-    }
-    .sidebar li:hover { background-color: #d0d0d0; }
-    .sidebar a { color: inherit; text-decoration: none; width: 100%; display: block; }
+.profile-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
+}
 
+.profile-photo {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
 
-    .main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      transition: margin-left 0.3s ease;
-      padding-top: 120px;
-    }
+.profile-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
 
-    .topbar {
-      position:fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 120px;
-      background-color: #f5f5f5;
-      padding: 30px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-    }
-    .topbar .right {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    /* 검색창 스타일 */
-    .search-box {
-      position: relative;
-      display: flex;
-      align-items: center;
-      margin-right: 45px;
-    }
-    .search-box input {
-      padding: 6px 30px 6px 10px;
-      border: 1px solid #7987FF;
-      border-radius: 4px;
-      font-size: 12px;
-      color: #979797;
-      outline: none;
-      background-color: transparent;
-      width: 240px;
-    }
+.keyword-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0;
+}
 
-    .search-icon {
-      position: absolute;
-      right: 10px;
-      color: #7987FF;
-      font-size: 14px;
-    }
+.keyword {
+  background-color: #e9ecef;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+}
 
-    /* 종 아이콘 (알림) */
-    .bell-icon {
-      position: relative;
-      background-color: #BCBCBC;
-      border: none;
-      border-radius: 4px;
-      font-size: 14px;
-      padding: 6px 8px;
-      color: white;
-      cursor: pointer;
-    }
+label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+  color: #333;
+}
 
-    /* 로그인 버튼 */
-    .login-btn {
-      background-color: #CDD2FA;
-      border: none;
-      border-radius: 4px;
-      font-size: 12px;
-      padding: 6px 12px;
-      color: #000;
-      cursor: pointer;
-    }
-    #notification-badge {
-      position: absolute;
-      top: 2px;
-      right: 8px;
-      width: 13px;
-      height: 13px;
-      background: #ff3434;
-      border-radius: 50%;
-      border: 2px solid #fff;
-      display: none;
-    }
-    #notification-badge {
-      top: -5px; right: -5px;
-    }
+p {
+  margin: 10px 0;
+  color: #666;
+}
 
+a.back-link {
+  display: inline-block;
+  margin-top: 20px;
+  text-align: center;
+  color: #007bff;
+  text-decoration: none;
+}
 
-    h2 { text-align: center; color: #333; }
-    .profile-section {
-      display: flex; align-items: flex-start; gap: 20px; margin-bottom: 20px;
-    }
-    .profile-photo {
-      width: 200px; height: 200px; position: relative; overflow: hidden; border-radius: 10px; flex-shrink: 0;
-    }
-    .profile-photo img {
-      width: 100%; height: 100%; object-fit: cover; border: 2px solid #ddd;
-    }
-    .keyword-container {
-      display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0;
-    }
-    .keyword {
-      background-color: #e9ecef; padding: 5px 10px; border-radius: 15px; font-size: 14px;
-    }
-    label {
-      font-weight: bold; margin-top: 10px; display: block; color: #333;
-    }
-    p {
-      margin: 10px 0; color: #666;
-    }
-    a.back-link {
-      display: inline-block; margin-top: 20px; text-align: center;
-      color: #007bff; text-decoration: none;
-    }
-    a.back-link:hover { text-decoration: underline; }
-    @media (max-width: 600px) {
-      .container { padding: 15px; }
-      .profile-section { flex-direction: column; align-items: center; }
-      .profile-photo { width: 120px; height: 120px; }
-    }
+a.back-link:hover {
+  text-decoration: underline;
+}
 
-      .content {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      background: linear-gradient(to bottom, #C5CBFF, #ffffff);
-      min-height: 100vh;
-      padding: 40px 0;
-    }
-    .study-detail {
-      width: 90vw; /* 기존보다 넓은 값으로 설정 */
-      max-width: 900px;
-      margin: 0 auto;
-      overflow: hidden;
-      padding: 0px;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.10);
-    }
+@media (max-width: 600px) {
+  .container {
+    padding: 15px;
+  }
 
+  .profile-section {
+    flex-direction: column;
+    align-items: center;
+  }
 
+  .profile-photo {
+    width: 120px;
+    height: 120px;
+  }
+}
 
+.study-detail {
+  width: 90vw;
+  /* 기존보다 넓은 값으로 설정 */
+  max-width: 900px;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 0px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.10);
+}
 
 .summary-box {
   background: white;
-  border-top: 15px solid #7987FF;
+  border-top: 15px solid #C7CDF8;
   padding: 24px;
-  height: 200px;
+  height: relative;
 }
 
 .summary-box h3 {
@@ -233,19 +121,20 @@
 .tags {
   margin-top: 12px;
   display: flex;
-  gap: 8px;
+  gap: 4px;
   flex-wrap: wrap;
 }
 
 .tags span {
-  background: #e9ecef;
+  background: #A2ABFF;
+  color:#ffff;
   padding: 4px 10px;
   border-radius: 12px;
   font-size: 13px;
 }
 
 .description-box {
-  background: #e4e7ff;
+  background: linear-gradient(to top right, #E8E8E8 20%, #DFE0ED 50%, #C7CDF8 100%);
   padding: 30px;
 }
 

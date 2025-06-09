@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>등록한 스터디 보기</title>
   <link rel="stylesheet" href="detailpage.css" />
+  <link rel="stylesheet" href="base.css" />
+
 </head>
 <body>
   <div class="sidebar">
@@ -47,13 +49,16 @@
           <h3 id="groupname">스터디명 <span class="like">♡</span></h3>
           <div class="meta">
             <img id="profile-image" src="" alt="작성자" />
-            <span id="meta-info">
-              <span id="writer"></span> • 
-              <span id="time"></span> • 
-              최대 <span id="max-people"></span>명 • 
-              <span id="mode"></span>
+            <span id="writer"></span>
+          </div>
+          <br>
+          <div class="meta">
+            <span id="time"></span> |  
+            최대 <span id="max-people"></span>명  |
+            <span id="mode"></span>
             </span>
           </div>
+          <br>
           <div class="tags" id="keyword-container"></div>
         </div>
 
@@ -151,8 +156,6 @@
     document.getElementById('max-people').textContent = studyData["max-people"] || '?';
     document.getElementById('mode').textContent = studyData.mode || '방식';
 
-    //document.getElementById('meta-info').textContent =
-      //`${studyData.writer || '작성자'} • ${timeText || '요일시간'} • ${studyData["max-people"]' 명' || '인원'} • ${studyData.mode || '방식'}`;
     document.getElementById('summary').textContent = studyData.summary || '스터디 설명 없음';
     document.getElementById('recruit').textContent = studyData.recruit || '모집 내용 없음';
 
@@ -162,7 +165,7 @@
     keywords.forEach(keyword => {
       if (keyword.trim()) {
         const span = document.createElement('span');
-        span.textContent = `# ${keyword.trim()}`;
+        span.textContent = `${keyword.trim()}`;
         keywordContainer.appendChild(span);
       }
     });
