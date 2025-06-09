@@ -1,33 +1,37 @@
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <title>스터디원 신청 관리</title>
-    <link rel="stylesheet" href="acceptdecline.css">
-    <link rel="stylesheet" href="base.css">
-  <body>
-  <div class="sidebar">
-    <div class="profile-photo">
+  <link rel="stylesheet" href="acceptdecline.css">
+  <link rel="stylesheet" href="base.css">
+
+<body>
+  <!--<div class="profile-photo">
       <img src="img/profilephoto.jpg" alt="프로필 사진">
       <div class="upload-option" onclick="document.getElementById('profile-upload').click()">
         사진 다시 업로드
         <input type="file" id="profile-upload" accept="image/*" onchange="previewImage(event)">
       </div>
-    </div>
-    <h3>메뉴</h3>
-    <ul>
-      <li><a href="mainpage.html">홈</a></li>
-      <li><a href="view_study.html">전체 스터디</a></li>
-      <li><a href="register.html">등록하기</a></li>
-      <li><a href="mypage.html">마이페이지</a></li>
-      <li><a href="acceptdecline.html">신청 수락/거절</a></li>
-    </ul>
-  </div>
+    </div>-->
 
-<div class="main">
-    <div class="topbar">
+  <div class="main">
+    <div class="navbar">
       <div style="display: flex; flex-direction: column;">
-        <strong>스터디 찾기</strong>
-        <button id="sidebar-toggle" class="sidebar-toggle-btn">≡ 메뉴 열기</button>
+        <a href="main.html"><img class="logo" src="logo/Studium logo4.png"></a>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <a href="main.html"><img class="logo" src="logo/Studium logo3.png"></a>
+      </div>
+      <div>
+        <ul class="nav-link">
+          <li><a href="about.html">About</a></li>
+          <li><a href="main.html">스터디 찾기</a></li>
+          <li><a href="newStudy.html">스터디 등록</a></li>
+          <li><a href="acceptdecline.html">스터디 관리</a></li>
+          <li><a href="mypage.html">마이페이지</a></li>
+          <!--<li ><a href="acceptdecline.html">신청 수락/거절</a></li>-->
+        </ul>
       </div>
       <div class="right">
         <div class="search-box">
@@ -35,11 +39,9 @@
           <span class="search-icon">🔍</span>
         </div>
         <button class="bell-icon" id="notification-btn">🔔<span id="notification-badge"></span></button>
-        <a href="login.html"><button class="login-btn">로그인/회원가입</button></a>
+        <div id="auth-button-container"> </div>
       </div>
     </div>
-
-
 
     <div class="container">
       <div class="member-list">
@@ -90,7 +92,8 @@
       </div>
     </div>
   </div>
-  <div id="notification-modal" style="display:none; position:fixed; top:70px; right:50px; z-index:9999; background:white; border:1px solid #ddd; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.15); padding:20px; min-width:280px;">
+  <div id="notification-modal"
+    style="display:none; position:fixed; top:70px; right:50px; z-index:9999; background:white; border:1px solid #ddd; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.15); padding:20px; min-width:280px;">
     <div>알림</div>
     <div>스터디원 요청이 도착했습니다.</div>
     <button id="accept-btn">수락</button>
@@ -109,7 +112,7 @@
       const file = event.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
           const img = document.querySelector('.sidebar .profile-photo img');
           img.src = e.target.result;
           localStorage.setItem('sidebarProfileImage', e.target.result);
@@ -118,7 +121,7 @@
       }
     }
     // topbar 알림 버튼
-    document.getElementById('notification-btn').onclick = function() {
+    document.getElementById('notification-btn').onclick = function () {
       document.getElementById('notification-modal').innerHTML = `
         <div>알림</div>
         <div>스터디원 요청이 도착했습니다.</div>
@@ -127,21 +130,21 @@
       `;
       document.getElementById('notification-modal').style.display = 'block';
       document.getElementById('notification-badge').style.display = 'none';
-      document.getElementById('accept-btn').onclick = function(){
+      document.getElementById('accept-btn').onclick = function () {
         document.getElementById('notification-modal').innerHTML = `
           <div>스터디원 요청을 <b style="color:green;">수락</b>했습니다!</div>
           <button id="close-btn">닫기</button>
         `;
-        document.getElementById('close-btn').onclick = function() {
+        document.getElementById('close-btn').onclick = function () {
           document.getElementById('notification-modal').style.display = 'none';
         }
       }
-      document.getElementById('reject-btn').onclick = function(){
+      document.getElementById('reject-btn').onclick = function () {
         document.getElementById('notification-modal').innerHTML = `
           <div>스터디원 요청을 <b style="color:red;">거절</b>했습니다.</div>
           <button id="close-btn">닫기</button>
         `;
-        document.getElementById('close-btn').onclick = function() {
+        document.getElementById('close-btn').onclick = function () {
           document.getElementById('notification-modal').style.display = 'none';
         }
       }
@@ -151,12 +154,12 @@
       const acceptBtn = td.querySelector('.accept');
       const rejectBtn = td.querySelector('.reject');
       const statusTd = td.parentElement.querySelector('.status');
-      acceptBtn.onclick = function() {
+      acceptBtn.onclick = function () {
         acceptBtn.disabled = true;
         rejectBtn.disabled = true;
         statusTd.innerHTML = '<span class="status accepted">수락됨</span>';
       };
-      rejectBtn.onclick = function() {
+      rejectBtn.onclick = function () {
         acceptBtn.disabled = true;
         rejectBtn.disabled = true;
         statusTd.innerHTML = '<span class="status rejected">거절됨</span>';
@@ -164,10 +167,10 @@
     });
     // 새 알림(임시)
     document.getElementById('notification-badge').style.display = 'inline-block';
-    window.addEventListener('mousedown', function(e){
+    window.addEventListener('mousedown', function (e) {
       let modal = document.getElementById('notification-modal');
       let btn = document.getElementById('notification-btn');
-      if(modal.style.display==="block" && !modal.contains(e.target) && e.target !== btn){
+      if (modal.style.display === "block" && !modal.contains(e.target) && e.target !== btn) {
         modal.style.display = "none";
       }
     });
@@ -187,19 +190,50 @@
   </script>
 
   <script>
-  const sidebar = document.querySelector('.sidebar');
-  const toggleBtn = document.getElementById('sidebar-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const toggleBtn = document.getElementById('sidebar-toggle');
 
-  toggleBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('active');
-  });
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
 
-  // 선택사항: 바깥 클릭 시 sidebar 닫기
-  window.addEventListener('click', (e) => {
-    if (!sidebar.contains(e.target) && e.target !== toggleBtn) {
-      sidebar.classList.remove('active');
+    // 선택사항: 바깥 클릭 시 sidebar 닫기
+    window.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && e.target !== toggleBtn) {
+        sidebar.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const currentUser = localStorage.getItem("currentUser");
+    const authContainer = document.getElementById("auth-button-container");
+
+    if (currentUser) {
+      // ✅ 로그인된 경우: 로그아웃 버튼 생성
+      const logoutBtn = document.createElement("button");
+      logoutBtn.className = "login-btn";
+      logoutBtn.textContent = "로그아웃";
+      logoutBtn.onclick = function () {
+        localStorage.removeItem("currentUser");
+        alert("로그아웃 되었습니다.");
+        location.reload(); // 새로고침으로 UI 갱신
+      };
+      authContainer.appendChild(logoutBtn);
+    } else {
+      // ✅ 비로그인 상태: 로그인/회원가입 링크
+      const loginLink = document.createElement("a");
+      loginLink.href = "login.html";
+
+      const loginBtn = document.createElement("button");
+      loginBtn.className = "login-btn";
+      loginBtn.textContent = "로그인/회원가입";
+
+      loginLink.appendChild(loginBtn);
+      authContainer.appendChild(loginLink);
     }
   });
 </script>
-</body>
+
 </html>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,7 +13,6 @@
         <div class="top-bar">
             <button onclick="location.href='login.html'">로그인</button>
         </div>
-
         <h2>회원가입</h2>
         <hr /><br />
 
@@ -101,6 +99,7 @@
             }
         });
 
+
         document.getElementById('signup-form').addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -115,13 +114,27 @@
                 alert('이메일 도메인을 선택하거나 입력해주세요.');
                 return;
             }
+
             emailFull.value = `${emailLocal.value.trim()}@${domain}`;
 
             const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-            localStorage.setItem('signupData', JSON.stringify(data));
+            const newUser = Object.fromEntries(formData);
+            newUser.id = Date.now(); // 내부 고유 ID도 부여 가능
 
-            alert('회원가입 정보가 저장되었습니다!');
+            // 기존 사용자 목록 불러오기
+            const userList = JSON.parse(localStorage.getItem('userList') || '[]');
+
+            // 아이디 중복 체크
+            if (userList.find(u => u.username === newUser.username)) {
+                alert('이미 존재하는 아이디입니다.');
+                return;
+            }
+
+            userList.push(newUser);
+            localStorage.setItem('userList', JSON.stringify(userList));
+
+            alert('회원가입이 완료되었습니다!');
+            window.location.href = 'login.html';
         });
     </script>
 </body>

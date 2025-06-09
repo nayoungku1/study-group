@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>등록한 스터디 보기</title>
+  <link rel="stylesheet" href="details.css" />
+  <link rel="stylesheet" href="base.css" />
+  <style>
+
+  </style>
+
+</head>
+
+<body>
+  <div class="navbar">
+    <div style="display: flex; flex-direction: column;">
+      <a href="main.html"><img class="logo" src="logo/Studium logo4.png"></a>
+    </div>
+    <div style="display: flex; flex-direction: column;">
+      <a href="main.html"><img class="logo" src="logo/Studium logo3.png"></a>
+    </div>
+    <div>
+      <ul class="nav-link">
+        <li><a href="about.html">About</a></li>
+        <li><a href="main.html">스터디 찾기</a></li>
+        <li><a href="newStudy.html">스터디 등록</a></li>
+        <li><a href="acceptdecline.html">스터디 관리</a></li>
+        <li><a href="mypage.html">마이페이지</a></li>
+        <!--<li ><a href="acceptdecline.html">신청 수락/거절</a></li>-->
+      </ul>
+    </div>
+    <div class="right">
+      <div class="search-box">
+        <input type="text" placeholder="스터디를 검색하세요..." />
+        <span class="search-icon">🔍</span>
+      </div>
+      <button class="bell-icon" id="notification-btn">🔔<span id="notification-badge"></span></button>
+      <div id="auth-button-container"></div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="content">
+      <div class="study-detail">
+        <div class="summary-box">
+          <h1> <b>스터디움이란?</b> </span></h1>
+          <h3>✅ 스터디, 이제는 쉽게 찾고 만들자!</h3>
+          <p>우리 웹사이트는 대학생들이 교내 스터디그룹을 쉽게 찾고 등록할 수 있도록 돕는 플랫폼입니다.</p>
+          <div>
+            대학생들은 대양한 이유로 스터디를 찾지만 정보 부족과 인맥 한계로 원하는 스터디를 찾거나 만들기 어렵습니다.
+            이런 문제를 해결하기 위해 누구나 쉽게 스터디를 찾고 개설할 수 있는 플랫폼을 기획했습니다.
+          </div>
+          <h3>💡 Problem to be solved</h3>
+          <p>
+          <ol>
+            <li>한눈에 볼 수 있는 스터디 정보</li>
+            <li>수요 파악 가능</li>
+            <li>편리한 관리</li>
+          </ol>
+          </p>
+          <h3>📍 Page Structure</h3>
+          <ul>
+            <li>About 페이지</li>
+            <li>메인 페이지 </li>
+            <ul>
+              <li>스터디 세부정보 페이지</li>
+              <ul>
+                <li>스터디 신청 페이지</li>
+              </ul>
+            </ul>
+            <li>스터디 등록 페이지</li>
+            <li>스터디 관리 페이지</li>
+            <li>마이페이지 </li>
+            <li>회원가입/로그인 </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="notification-modal"
+    style="display:none; position:fixed; top:70px; right:50px; z-index:9999; background:white; border:1px solid #ddd; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.15); padding:20px; min-width:280px;">
+  </div>
+
+  <script>
+    // 알림 기능
+    const notificationBtn = document.getElementById('notification-btn');
+    notificationBtn.onclick = () => {
+      const modal = document.getElementById('notification-modal');
+      modal.innerHTML = `
+        <div>알림</div>
+        <div>스터디원 요청이 도착했습니다.</div>
+        <button id="accept-btn">수락</button>
+        <button id="reject-btn">거절</button>
+      `;
+      modal.style.display = 'block';
+      document.getElementById('notification-badge').style.display = 'none';
+
+      document.getElementById('accept-btn').onclick = () => {
+        modal.innerHTML = `<div>스터디원 요청을 <b style="color:green;">수락</b>했습니다!</div><button id="close-btn">닫기</button>`;
+        document.getElementById('close-btn').onclick = () => { modal.style.display = 'none'; };
+      };
+      document.getElementById('reject-btn').onclick = () => {
+        modal.innerHTML = `<div>스터디원 요청을 <b style="color:red;">거절</b>했습니다.</div><button id="close-btn">닫기</button>`;
+        document.getElementById('close-btn').onclick = () => { modal.style.display = 'none'; };
+      };
+    };
+    window.addEventListener('mousedown', function (e) {
+      let modal = document.getElementById('notification-modal');
+      if (modal.style.display === "block" && !modal.contains(e.target) && e.target !== notificationBtn) {
+        modal.style.display = "none";
+      }
+    });
+    // 초기 알림 표시
+    document.getElementById('notification-badge').style.display = 'inline-block';
+  </script>
+
+</body>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const currentUser = localStorage.getItem("currentUser");
+    const authContainer = document.getElementById("auth-button-container");
+
+    if (currentUser) {
+      // ✅ 로그인된 경우: 로그아웃 버튼 생성
+      const logoutBtn = document.createElement("button");
+      logoutBtn.className = "login-btn";
+      logoutBtn.textContent = "로그아웃";
+      logoutBtn.onclick = function () {
+        localStorage.removeItem("currentUser");
+        alert("로그아웃 되었습니다.");
+        location.reload(); // 새로고침으로 UI 갱신
+      };
+      authContainer.appendChild(logoutBtn);
+    } else {
+      // ✅ 비로그인 상태: 로그인/회원가입 링크
+      const loginLink = document.createElement("a");
+      loginLink.href = "login.html";
+
+      const loginBtn = document.createElement("button");
+      loginBtn.className = "login-btn";
+      loginBtn.textContent = "로그인/회원가입";
+
+      loginLink.appendChild(loginBtn);
+      authContainer.appendChild(loginLink);
+    }
+  });
+</script>
+
+</html>

@@ -11,34 +11,30 @@
 
 <body>
   <div>
-    
+
   </div>
 
-  <div class="main">
-    <div class="navbar">
-      <div style="display: flex; flex-direction: column;">
-        <strong>스터디 찾기</strong>
-        <button id="sidebar-toggle" class="sidebar-toggle-btn">≡ 메뉴 열기</button>
-      </div>
-      <div>
-        <ul class="nav-link">
-          <li ><a href="about.html">About</a></li>
-          <li ><a href="main.html">스터디 찾기</a></li>
-          <li ><a href="newStudy.html">스터디 등록</a></li>
-          <li ><a href="mypage.html">마이페이지</a></li>
-          <!--<li ><a href="acceptdecline.html">신청 수락/거절</a></li>-->
-        </ul>
-      </div>
-      <div class="right">
-        <div class="search-box">
-          <input type="text" placeholder="스터디를 검색하세요..." />
-          <span class="search-icon">🔍</span>
-        </div>
-        <button class="bell-icon" id="notification-btn">🔔<span id="notification-badge"></span></button>
-        <a href="login.html"><button class="login-btn">로그인/회원가입</button></a>
-      </div>
-    </div>
 
+  <div class="navbar">
+    <div style="display: flex; flex-direction: column;">
+      <a class="logo" href="main.html"><img class="logo" src="logo/Studium logo4.png"></a>
+    </div>
+    <div>
+      <ul class="nav-link">
+        <li><a href="about.html">About</a></li>
+        <li><a href="main.html">스터디 찾기</a></li>
+        <li><a href="newStudy.html">스터디 등록</a></li>
+        <li><a href="acceptdecline.html">스터디 관리</a></li>
+        <li><a href="mypage.html">마이페이지</a></li>
+        <!--<li ><a href="acceptdecline.html">신청 수락/거절</a></li>-->
+      </ul>
+    </div>
+    <div class="right">
+      <button class="bell-icon" id="notification-btn">🔔<span id="notification-badge"></span></button>
+      <div id="auth-button-container"></div>
+    </div>
+  </div>
+  <div class="main">
     <div class="category-bar">
       <botton class="category-item active">전체</botton>
       <botton class="category-item">개발</botton>
@@ -173,5 +169,37 @@
   </script>
 
 </body>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const currentUser = localStorage.getItem("currentUser");
+    const authContainer = document.getElementById("auth-button-container");
+
+    if (currentUser) {
+      // ✅ 로그인된 경우: 로그아웃 버튼 생성
+      const logoutBtn = document.createElement("button");
+      logoutBtn.className = "login-btn";
+      logoutBtn.textContent = "로그아웃";
+      logoutBtn.onclick = function () {
+        localStorage.removeItem("currentUser");
+        alert("로그아웃 되었습니다.");
+        location.reload(); // 새로고침으로 UI 갱신
+      };
+      authContainer.appendChild(logoutBtn);
+    } else {
+      // ✅ 비로그인 상태: 로그인/회원가입 링크
+      const loginLink = document.createElement("a");
+      loginLink.href = "login.html";
+
+      const loginBtn = document.createElement("button");
+      loginBtn.className = "login-btn";
+      loginBtn.textContent = "로그인/회원가입";
+
+      loginLink.appendChild(loginBtn);
+      authContainer.appendChild(loginLink);
+    }
+  });
+</script>
+
 
 </html>

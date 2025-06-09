@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>로그인</title>
+  <link rel="stylesheet" href="base.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,68 +17,81 @@
       height: 100vh;
       background-color: #f0f0f0;
     }
-    .login-container {
+
+    .container {
       background-color: white;
-      padding: 10px;
-      border-radius: 5px;
+      border-top: 15px solid #C7CDF8;
+      padding: 50px;
+      border-radius: 1dvh;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       width: 300px;
+      text-align: center;
     }
-    .login-container h2 {
+
+    h2 {
       text-align: center;
       margin-bottom: 20px;
     }
-    .login-container input {
+
+    input {
       width: 90%;
       padding: 10px;
       margin: 10px 10px;
       border: 1px solid #ccc;
       border-radius: 5px;
     }
-    .login-container button {
-      width: 100%;
+
+    button {
+      width: 95%;
       padding: 10px;
+      margin: 10px 10px;
       background-color: #e0e0e0;
       border: none;
       border-radius: 5px;
       cursor: pointer;
     }
-    .login-container button:hover {
+
+    button:hover {
       background-color: #d0d0d0;
     }
   </style>
 </head>
+
 <body>
-  <div class="login-container">
+  <div class="container">
+    <a href="main.html"><img class="logo" src="logo/Studium logo4.png"></a>
     <h2>로그인</h2>
-    <form id="login-form" onsubmit="handleLogin(event)">
-      <input type="email" id="email" placeholder="이메일" required>
-      <input type="password" id="password" placeholder="비밀번호" required>
+    <form id="login-form">
+      <label for="username"></label>
+      <input type="text" id="username" name="username" placeholder="ID" required />
+      <br>
+      <input type="password" id="password" name="password" placeholder="Password" required />
+      <br>
       <button type="submit">로그인</button>
     </form>
+    <p>계정이 없으신가요? <a href="sign-in.html">회원가입</a></p>
   </div>
-
-  <script>
-    function handleLogin(event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      // 간단한 로그인 처리 (실제로는 서버와 연동 필요)
-      if (email && password) {
-        // 로컬 스토리지에 사용자 프로필 저장 (비밀번호는 보안상 제외)
-        const userProfile = {
-          name: email.split('@')[0], // 임시 이름 (실제로는 가입 데이터 사용)
-          email: email,
-          phone: '' // 로그인 시 초기값은 빈 문자열
-        };
-        localStorage.setItem('userProfile', JSON.stringify(userProfile));
-        alert(`로그인 성공!\n이메일: ${email}\n다음에 마이페이지로 이동됩니다.`);
-        // 실제로는 페이지 이동 로직 추가 (예: window.location.href = 'mypage.html';)
-      } else {
-        alert('이메일과 비밀번호를 입력해주세요.');
-      }
-    }
-  </script>
 </body>
+
+<script>
+  document.getElementById('login-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+
+    const users = JSON.parse(localStorage.getItem('userList') || '[]');
+    const found = users.find(user => user.username === username && user.password === password);
+
+    if (!found) {
+      alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
+    localStorage.setItem('currentUser', username);  // ✅ 로그인 상태 저장
+    alert(`${found.name}님 환영합니다!`);
+    window.location.href = 'main.html';  // 또는 mypage.html
+  });
+</script>
+
 </html>

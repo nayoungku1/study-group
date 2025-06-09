@@ -79,7 +79,7 @@
 }
 
 
-input,
+input[type="email"],
 textarea {
   margin-bottom: 16px;
   padding: 12px;

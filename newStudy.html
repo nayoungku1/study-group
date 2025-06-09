@@ -10,29 +10,23 @@
 </head>
 
 <body>
-    <div class="sidebar">
-        <div class="profile-photo">
-            <img src="img/profilephoto.jpg" alt="프로필 사진">
-            <div class="upload-option" onclick="document.getElementById('profile-upload').click()">
-                사진 다시 업로드
-                <input type="file" id="profile-upload" accept="image/*" onchange="previewImage(event)">
-            </div>
-        </div>
-        <h3>메뉴</h3>
-        <ul>
-            <li><a href="mainpage.html">홈</a></li>
-            <li><a href="view_study.html">전체 스터디</a></li>
-            <li><a href="newStudy.html">등록하기</a></li>
-            <li><a href="mypage.html">마이페이지</a></li>
-            <li><a href="acceptdecline.html">신청 수락/거절</a></li>
-        </ul>
-    </div>
-
     <div class="main">
-        <div class="topbar">
+        <div class="navbar">
             <div style="display: flex; flex-direction: column;">
-                <strong>스터디 찾기</strong>
-                <button id="sidebar-toggle" class="sidebar-toggle-btn">≡ 메뉴 열기</button>
+                <a href="main.html"><img class="logo" src="logo/Studium logo4.png"></a>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <a href="main.html"><img class="logo" src="logo/Studium logo3.png"></a>
+            </div>
+            <div>
+                <ul class="nav-link">
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="main.html">스터디 찾기</a></li>
+                    <li><a href="newStudy.html">스터디 등록</a></li>
+                    <li><a href="acceptdecline.html">스터디 관리</a></li>
+                    <li><a href="mypage.html">마이페이지</a></li>
+                    <!--<li ><a href="acceptdecline.html">신청 수락/거절</a></li>-->
+                </ul>
             </div>
             <div class="right">
                 <div class="search-box">
@@ -40,7 +34,7 @@
                     <span class="search-icon">🔍</span>
                 </div>
                 <button class="bell-icon" id="notification-btn">🔔<span id="notification-badge"></span></button>
-                <a href="login.html"><button class="login-btn">로그인 / 회원가입</button></a>
+                <div id="auth-button-container"></div>
             </div>
         </div>
         <div class="content">
@@ -128,177 +122,210 @@
         <button id="accept-btn">수락</button>
         <button id="reject-btn">거절</button>
     </div>
-
-    <script>
-        // 사이드바 프로필 사진 로드 (고정)
-        const sidebarProfileImage = localStorage.getItem('sidebarProfileImage');
-        if (sidebarProfileImage) {
-            document.querySelector('.sidebar .profile-photo img').src = sidebarProfileImage;
-        }
-        function previewSidebarImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = document.querySelector('.sidebar .profile-photo img');
-                    img.src = e.target.result;
-                    localStorage.setItem('sidebarProfileImage', e.target.result);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-        // topbar 알림 버튼
-        document.getElementById('notification-btn').onclick = function () {
-            document.getElementById('notification-modal').innerHTML = `
-                <div>알림</div>
-                <div>스터디원 요청이 도착했습니다.</div>
-                <button id="accept-btn">수락</button>
-                <button id="reject-btn">거절</button>
-            `;
-            document.getElementById('notification-modal').style.display = 'block';
-            document.getElementById('notification-badge').style.display = 'none';
-            document.getElementById('accept-btn').onclick = function () {
-                document.getElementById('notification-modal').innerHTML = `
-                    <div>스터디원 요청을 <b style="color:green;">수락</b>했습니다!</div>
-                    <button id="close-btn">닫기</button>
-                `;
-                document.getElementById('close-btn').onclick = function () {
-                    document.getElementById('notification-modal').style.display = 'none';
-                }
-            }
-            document.getElementById('reject-btn').onclick = function () {
-                document.getElementById('notification-modal').innerHTML = `
-                    <div>스터디원 요청을 <b style="color:red;">거절</b>했습니다.</div>
-                    <button id="close-btn">닫기</button>
-                `;
-                document.getElementById('close-btn').onclick = function () {
-                    document.getElementById('notification-modal').style.display = 'none';
-                }
-            }
-        };
-
-        // 새 알림(임시)
-        document.getElementById('notification-badge').style.display = 'inline-block';
-        window.addEventListener('mousedown', function (e) {
-            let modal = document.getElementById('notification-modal');
-            let btn = document.getElementById('notification-btn');
-            if (modal.style.display === "block" && !modal.contains(e.target) && e.target !== btn) {
-                modal.style.display = "none";
-            }
-        });
-    </script>
-
-    <script>
-        // ✅ 커버 이미지 저장 (스터디 대표 이미지)
-        function previewImage(event) {
-            const reader = new FileReader();
-            reader.onload = function () {
-                const output = document.getElementById('profile-image');
-                output.src = reader.result;
-                localStorage.setItem('studyCoverImage', reader.result);  // ✅ 커버 이미지로 저장
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
-
-        // ✅ 키워드 입력 및 관리
-        function addKeyword(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                const input = document.getElementById('keyword-input');
-                const keyword = input.value.trim();
-                if (keyword) {
-                    const container = document.getElementById('keyword-container');
-                    const keywordDiv = document.createElement('div');
-                    keywordDiv.className = 'keyword';
-                    keywordDiv.innerHTML = `<span class="keyword-text"># ${keyword}</span><span class="remove" onclick="removeKeyword(this)">x</span>`;
-                    container.appendChild(keywordDiv);
-                    updateKeywords();
-                    input.value = '';
-                }
-            }
-        }
-
-        function removeKeyword(element) {
-            const keywordDiv = element.parentElement;
-            keywordDiv.remove();
-            updateKeywords();
-        }
-
-        function updateKeywords() {
-            const keywords = Array.from(document.querySelectorAll('.keyword .keyword-text'))
-                .map(span => span.textContent.replace('#', '').trim())
-                .filter(keyword => keyword)
-                .join(',');
-            document.getElementById('keywords').value = keywords;
-        }
-
-        // ✅ 스터디 등록
-        document.getElementById('study-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-
-            // 복수 선택: 요일
-            const daysArray = Array.from(document.querySelectorAll('input[name="study-day"]:checked'))
-                .map(cb => cb.value);
-            data.time = daysArray;
-
-            // 유효성 검사
-            if (!data.groupname || !data.time || !data.category || !data.summary || !data.recruit) {
-                alert('모든 필드를 채워주세요!');
-                return;
-            }
-
-            // 추가 정보
-            data.writer = "홍길동";  // 로그인 연동 시 바꾸세요
-            data.mode = "대면";
-            data["max-people"] = data["max-people"];
-            data.id = Date.now();  // 고유 ID
-
-            // 커버 이미지 연결
-            data.coverImage = localStorage.getItem("studyCoverImage") || "img/defaultcover.jpg";
-
-            // ✅ 기존 studyList 불러오기 + 추가
-            const studyList = JSON.parse(localStorage.getItem("studyList") || "[]");
-            studyList.push(data);
-            localStorage.setItem("studyList", JSON.stringify(studyList));
-
-            alert('스터디가 등록되었습니다!');
-            window.location.href = "mainpage.html";  // 또는 상세 페이지
-        });
-    </script>
-
-    <script>
-        const toggleButton = document.getElementById("sidebar-toggle");
-        const sidebar = document.querySelector(".sidebar");
-        const main = document.querySelector(".main");
-
-        // 버튼 클릭 시 토글 + 여백 조정
-        toggleButton.addEventListener("click", function (event) {
-            event.stopPropagation(); // 버튼 클릭 시 문서 클릭으로 전파되지 않게
-            sidebar.classList.toggle("active");
-
-            if (sidebar.classList.contains("active")) {
-                main.style.marginLeft = "200px";
-            } else {
-                main.style.marginLeft = "0";
-            }
-        });
-
-        // 사이드바 클릭 시도 전파 막기
-        sidebar.addEventListener("click", function (event) {
-            event.stopPropagation(); // 사이드바 내부 클릭 시 문서 클릭 이벤트 방지
-        });
-
-        // 문서 전체 클릭 감지 (바깥 클릭 시 닫기)
-        document.addEventListener("click", function () {
-            if (sidebar.classList.contains("active")) {
-                sidebar.classList.remove("active");
-                main.style.marginLeft = "0";
-            }
-        });
-    </script>
 </body>
+<script>
+    // 사이드바 프로필 사진 로드 (고정)
+    const sidebarProfileImage = localStorage.getItem('sidebarProfileImage');
+    if (sidebarProfileImage) {
+        document.querySelector('.sidebar .profile-photo img').src = sidebarProfileImage;
+    }
+    function previewSidebarImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.querySelector('.sidebar .profile-photo img');
+                img.src = e.target.result;
+                localStorage.setItem('sidebarProfileImage', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    // topbar 알림 버튼
+    document.getElementById('notification-btn').onclick = function () {
+        document.getElementById('notification-modal').innerHTML = `
+            <div>알림</div>
+            <div>스터디원 요청이 도착했습니다.</div>
+            <button id="accept-btn">수락</button>
+            <button id="reject-btn">거절</button>
+        `;
+        document.getElementById('notification-modal').style.display = 'block';
+        document.getElementById('notification-badge').style.display = 'none';
+        document.getElementById('accept-btn').onclick = function () {
+            document.getElementById('notification-modal').innerHTML = `
+                <div>스터디원 요청을 <b style="color:green;">수락</b>했습니다!</div>
+                <button id="close-btn">닫기</button>
+            `;
+            document.getElementById('close-btn').onclick = function () {
+                document.getElementById('notification-modal').style.display = 'none';
+            }
+        }
+        document.getElementById('reject-btn').onclick = function () {
+            document.getElementById('notification-modal').innerHTML = `
+                <div>스터디원 요청을 <b style="color:red;">거절</b>했습니다.</div>
+                <button id="close-btn">닫기</button>
+            `;
+            document.getElementById('close-btn').onclick = function () {
+                document.getElementById('notification-modal').style.display = 'none';
+            }
+        }
+    };
+
+    // 새 알림(임시)
+    document.getElementById('notification-badge').style.display = 'inline-block';
+    window.addEventListener('mousedown', function (e) {
+        let modal = document.getElementById('notification-modal');
+        let btn = document.getElementById('notification-btn');
+        if (modal.style.display === "block" && !modal.contains(e.target) && e.target !== btn) {
+            modal.style.display = "none";
+        }
+    });
+</script>
+
+<script>
+    // ✅ 커버 이미지 저장 (스터디 대표 이미지)
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const output = document.getElementById('profile-image');
+            output.src = reader.result;
+            localStorage.setItem('studyCoverImage', reader.result);  // ✅ 커버 이미지로 저장
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    // ✅ 키워드 입력 및 관리
+    function addKeyword(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const input = document.getElementById('keyword-input');
+            const keyword = input.value.trim();
+            if (keyword) {
+                const container = document.getElementById('keyword-container');
+                const keywordDiv = document.createElement('div');
+                keywordDiv.className = 'keyword';
+                keywordDiv.innerHTML = `<span class="keyword-text"># ${keyword}</span><span class="remove" onclick="removeKeyword(this)">x</span>`;
+                container.appendChild(keywordDiv);
+                updateKeywords();
+                input.value = '';
+            }
+        }
+    }
+
+    function removeKeyword(element) {
+        const keywordDiv = element.parentElement;
+        keywordDiv.remove();
+        updateKeywords();
+    }
+
+    function updateKeywords() {
+        const keywords = Array.from(document.querySelectorAll('.keyword .keyword-text'))
+            .map(span => span.textContent.replace('#', '').trim())
+            .filter(keyword => keyword)
+            .join(',');
+        document.getElementById('keywords').value = keywords;
+    }
+
+    // ✅ 스터디 등록
+    document.getElementById('study-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+
+        // 복수 선택: 요일
+        const daysArray = Array.from(document.querySelectorAll('input[name="study-day"]:checked'))
+            .map(cb => cb.value);
+        data.time = daysArray;
+
+        // 유효성 검사
+        if (!data.groupname || !data.time || !data.category || !data.summary || !data.recruit) {
+            alert('모든 필드를 채워주세요!');
+            return;
+        }
+
+        // 추가 정보
+        const currentUsername = localStorage.getItem("currentUser");
+        const userList = JSON.parse(localStorage.getItem("userList") || "[]");
+        const currentUser = userList.find(u => u.username === currentUsername);
+
+        data.writer = currentUser;  // 로그인 연동 시 바꾸세요
+        data.mode = "대면";
+        data["max-people"] = data["max-people"];
+        data.id = Date.now();  // 고유 ID
+
+        // 커버 이미지 연결
+        data.coverImage = localStorage.getItem("studyCoverImage") || "img/defaultcover.jpg";
+
+        // ✅ 기존 studyList 불러오기 + 추가
+        const studyList = JSON.parse(localStorage.getItem("studyList") || "[]");
+        studyList.push(data);
+        localStorage.setItem("studyList", JSON.stringify(studyList));
+
+        alert('스터디가 등록되었습니다!');
+        window.location.href = "mainpage.html";  // 또는 상세 페이지
+    });
+</script>
+
+<script>
+    const toggleButton = document.getElementById("sidebar-toggle");
+    const sidebar = document.querySelector(".sidebar");
+    const main = document.querySelector(".main");
+
+    // 버튼 클릭 시 토글 + 여백 조정
+    toggleButton.addEventListener("click", function (event) {
+        event.stopPropagation(); // 버튼 클릭 시 문서 클릭으로 전파되지 않게
+        sidebar.classList.toggle("active");
+
+        if (sidebar.classList.contains("active")) {
+            main.style.marginLeft = "200px";
+        } else {
+            main.style.marginLeft = "0";
+        }
+    });
+
+    // 사이드바 클릭 시도 전파 막기
+    sidebar.addEventListener("click", function (event) {
+        event.stopPropagation(); // 사이드바 내부 클릭 시 문서 클릭 이벤트 방지
+    });
+
+    // 문서 전체 클릭 감지 (바깥 클릭 시 닫기)
+    document.addEventListener("click", function () {
+        if (sidebar.classList.contains("active")) {
+            sidebar.classList.remove("active");
+            main.style.marginLeft = "0";
+        }
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const currentUser = localStorage.getItem("currentUser");
+        const authContainer = document.getElementById("auth-button-container");
+
+        if (currentUser) {
+            // ✅ 로그인된 경우: 로그아웃 버튼 생성
+            const logoutBtn = document.createElement("button");
+            logoutBtn.className = "login-btn";
+            logoutBtn.textContent = "로그아웃";
+            logoutBtn.onclick = function () {
+                localStorage.removeItem("currentUser");
+                alert("로그아웃 되었습니다.");
+                location.reload(); // 새로고침으로 UI 갱신
+            };
+            authContainer.appendChild(logoutBtn);
+        } else {
+            // ✅ 비로그인 상태: 로그인/회원가입 링크
+            const loginLink = document.createElement("a");
+            loginLink.href = "login.html";
+
+            const loginBtn = document.createElement("button");
+            loginBtn.className = "login-btn";
+            loginBtn.textContent = "로그인/회원가입";
+
+            loginLink.appendChild(loginBtn);
+            authContainer.appendChild(loginLink);
+        }
+    });
+</script>
 
 </html>
