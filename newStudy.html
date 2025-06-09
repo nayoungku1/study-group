@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스터디 그룹 등록</title>
+    <link rel="stylesheet" href="newStudy.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="profile-photo">
+            <img src="img/profilephoto.jpg" alt="프로필 사진">
+            <div class="upload-option" onclick="document.getElementById('profile-upload').click()">
+                사진 다시 업로드
+                <input type="file" id="profile-upload" accept="image/*" onchange="previewImage(event)">
+            </div>
+        </div>
+        <h3>메뉴</h3>
+        <ul>
+            <li><a href="mainpage.html">홈</a></li>
+            <li><a href="view_study.html">전체 스터디</a></li>
+            <li><a href="newStudy.html">등록하기</a></li>
+            <li><a href="mypage.html">마이페이지</a></li>
+            <li><a href="acceptdecline.html">신청 수락/거절</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <div class="topbar">
+            <div style="display: flex; flex-direction: column;">
+                <strong>스터디 찾기</strong>
+                <button id="sidebar-toggle" class="sidebar-toggle-btn">≡ 메뉴 열기</button>
+            </div>
+            <div class="right">
+                <div class="search-box">
+                    <input type="text" placeholder="스터디를 검색하세요..." />
+                    <span class="search-icon">🔍</span>
+                </div>
+                <button class="bell-icon" id="notification-btn">🔔<span id="notification-badge"></span></button>
+                <a href="login.html"><button class="login-btn">로그인/회원가입</button></a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="container">
+                <h2>새로운 스터디 등록하기</h2>
+                <p class="description">내게 딱맞는 스터디 그룹이 아직 없다면, 직접 만들어보는 건 어떨까요? 👀✨ </p>
+                <hr>
+                <br>
+                <form id="study-form">
+                    <div class="profile-section">
+                        <div class="profile-photo">
+                            <img id="profile-image" src="img/studygroup.jpg" alt="커버 사진">
+                            <div class="upload-option" onclick="document.getElementById('profile-upload').click()">
+                                사진 다시 업로드
+                                <input type="file" id="profile-upload" name="profile-upload" accept="image/*"
+                                    onchange="previewImage(event)">
+                            </div>
+                        </div>
+                        <div class="profile-details">
+                            <div>
+                                <label for="groupname">스터디 이름</label>
+                                <p class="supplementary"> 쉽게 알아볼 수 있는 이름을 입력하면 다른 사용자가 찾기 편해요.</p>
+                                <input type="text" id="groupname" name="groupname" placeholder="스터디 이름을 입력하세요" required>
+                                
+                            </div>
+                            <div>
+                                <label for="category">스터디 카테고리</label>
+                                <select id="category" name="category" required>
+                                    <option value="" disabled selected>== 스터디 카테고리 ==</option>
+                                    <option value="certificate">자격증</option>
+                                    <option value="language">외국어 공부</option>
+                                    <option value="hobby">취미</option>
+                                    <option value="major">전공 공부</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="study-day"> 스터디 요일 </label>
+                                <input  type="checkbox" name="study-day" value="mon" /> 월요일
+                                <input type="checkbox" name="study-day" value="tue" /> 화요일
+                                <input type="checkbox" name="study-day" value="wed" /> 수요일
+                                <input type="checkbox" name="study-day" value="thu" /> 목요일
+                                <input type="checkbox" name="study-day" value="fri" /> 금요일
+                                <br>
+                                <input type="checkbox" name="study-day" value="sat" /> 토요일
+                                <input type="checkbox" name="study-day" value="sun" /> 일요일
+                            </div>
+                            <br>
+                            <div>
+                                <label for="keyword-input">스터디 키워드</label>
+                                <input type="text" id="keyword-input" placeholder="키워드를 입력 후 Enter"
+                                    onkeypress="addKeyword(event)">
+                                <div id="keyword-container" class="keyword-container"></div>
+                                <input type="hidden" id="keywords" name="keywords">
+                            </div>
+                            <div>
+                                <label for="keyword-input">스터디 최대 인원</label>
+                                <p class="supplementary"> 최소 2명부터 최대 50명까지 설정 가능해요.</p>
+                                <input type="number" id="max-people" name="max-people" min="2" max="50" placeholder="숫자만 입력해주세요" required>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <label for="summary">스터디 설명 📝 </label>
+                    <textarea id="summary" name="summary" placeholder="스터디의 목적과 간단한 설명을 작성해주세요" required></textarea>
+
+                    <label for="recruit">이런 스터디원을 구합니다! 🙌</label>
+                    <textarea id="recruit" name="recruit" placeholder="어떤 사람이 참여하면 좋을지, 특징을 작성해주세요"
+                        required></textarea>
+
+                    <p>
+                        <input type="submit" value="등록하기">
+                        <input type="reset" value="초기화">
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="notification-modal"
+        style="display:none; position:fixed; top:70px; right:50px; z-index:9999; background:white; border:1px solid #ddd; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.15); padding:20px; min-width:280px;">
+        <div>알림</div>
+        <div>스터디원 요청이 도착했습니다.</div>
+        <button id="accept-btn">수락</button>
+        <button id="reject-btn">거절</button>
+    </div>
+
+    <script>
+        // 사이드바 프로필 사진 로드 (고정)
+        const sidebarProfileImage = localStorage.getItem('sidebarProfileImage');
+        if (sidebarProfileImage) {
+            document.querySelector('.sidebar .profile-photo img').src = sidebarProfileImage;
+        }
+        function previewSidebarImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.querySelector('.sidebar .profile-photo img');
+                    img.src = e.target.result;
+                    localStorage.setItem('sidebarProfileImage', e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        // topbar 알림 버튼
+        document.getElementById('notification-btn').onclick = function () {
+            document.getElementById('notification-modal').innerHTML = `
+                <div>알림</div>
+                <div>스터디원 요청이 도착했습니다.</div>
+                <button id="accept-btn">수락</button>
+                <button id="reject-btn">거절</button>
+            `;
+            document.getElementById('notification-modal').style.display = 'block';
+            document.getElementById('notification-badge').style.display = 'none';
+            document.getElementById('accept-btn').onclick = function () {
+                document.getElementById('notification-modal').innerHTML = `
+                    <div>스터디원 요청을 <b style="color:green;">수락</b>했습니다!</div>
+                    <button id="close-btn">닫기</button>
+                `;
+                document.getElementById('close-btn').onclick = function () {
+                    document.getElementById('notification-modal').style.display = 'none';
+                }
+            }
+            document.getElementById('reject-btn').onclick = function () {
+                document.getElementById('notification-modal').innerHTML = `
+                    <div>스터디원 요청을 <b style="color:red;">거절</b>했습니다.</div>
+                    <button id="close-btn">닫기</button>
+                `;
+                document.getElementById('close-btn').onclick = function () {
+                    document.getElementById('notification-modal').style.display = 'none';
+                }
+            }
+        };
+        // 키워드 로직/등록폼 (기존)
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const output = document.getElementById('profile-image');
+                output.src = reader.result;
+                localStorage.setItem('profileImage', reader.result);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+        function addKeyword(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const input = document.getElementById('keyword-input');
+                const keyword = input.value.trim();
+                if (keyword) {
+                    const container = document.getElementById('keyword-container');
+                    const keywordDiv = document.createElement('div');
+                    keywordDiv.className = 'keyword';
+                    keywordDiv.innerHTML = `<span class="keyword-text"># ${keyword}</span><span class="remove" onclick="removeKeyword(this)">x</span>`;
+                    container.appendChild(keywordDiv);
+                    updateKeywords();
+                    input.value = '';
+                }
+            }
+        }
+        function removeKeyword(element) {
+            const keywordDiv = element.parentElement;
+            keywordDiv.remove();
+            updateKeywords();
+        }
+        function updateKeywords() {
+            const keywords = Array.from(document.querySelectorAll('.keyword .keyword-text'))
+                .map(span => span.textContent.replace('#', '').trim())
+                .filter(keyword => keyword)
+                .join(',');
+            document.getElementById('keywords').value = keywords;
+        }
+        document.getElementById('study-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            // 복수 선택: 요일
+            const daysArray = Array.from(document.querySelectorAll('input[name="study-day"]:checked'))
+                                .map(cb => cb.value);
+
+            data.time = daysArray;
+
+            if (!data.groupname || !data.time  || !data.category || !data.summary || !data.recruit) {
+                alert('모든 필드를 채워주세요!');
+                return;
+            }
+
+            // 추가 정보 (실제 앱에서는 로그인 사용자 이름으로 설정)
+            data.writer = "홍길동";
+            data.mode = "대면"; // 또는 select box 활용 가능
+
+            localStorage.setItem('studyData', JSON.stringify(data));
+            alert('스터디 정보가 로컬에 저장되었습니다! "등록된 스터디 보기" 링크를 클릭하여 확인하세요.');
+        });
+
+        // 새 알림(임시)
+        document.getElementById('notification-badge').style.display = 'inline-block';
+        window.addEventListener('mousedown', function (e) {
+            let modal = document.getElementById('notification-modal');
+            let btn = document.getElementById('notification-btn');
+            if (modal.style.display === "block" && !modal.contains(e.target) && e.target !== btn) {
+                modal.style.display = "none";
+            }
+        });
+    </script>
+
+
+    <script>
+        const toggleButton = document.getElementById("sidebar-toggle");
+        const sidebar = document.querySelector(".sidebar");
+        const main = document.querySelector(".main");
+
+        // 버튼 클릭 시 토글 + 여백 조정
+        toggleButton.addEventListener("click", function (event) {
+            event.stopPropagation(); // 버튼 클릭 시 문서 클릭으로 전파되지 않게
+            sidebar.classList.toggle("active");
+
+            if (sidebar.classList.contains("active")) {
+                main.style.marginLeft = "200px";
+            } else {
+                main.style.marginLeft = "0";
+            }
+        });
+
+        // 사이드바 클릭 시도 전파 막기
+        sidebar.addEventListener("click", function (event) {
+            event.stopPropagation(); // 사이드바 내부 클릭 시 문서 클릭 이벤트 방지
+        });
+
+        // 문서 전체 클릭 감지 (바깥 클릭 시 닫기)
+        document.addEventListener("click", function () {
+            if (sidebar.classList.contains("active")) {
+                sidebar.classList.remove("active");
+                main.style.marginLeft = "0";
+            }
+        });
+    </script>
+
+
+
+
+</body>
+
+</html>

@@ -1,322 +1,267 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Page</title>
-    <style>
-        body {
-            font-family: 'Arial', 'Noto Sans KR', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            background-color: #ffffff;
-        }
-        .container {
-            display: flex;
-            flex: 1;
-        }
-        .sidebar {
-            width: 200px;
-            background-color: #f0f0f0;
-            padding: 20px;
-            border-right: 1px solid #ccc;
-        }
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-        .sidebar li {
-            margin: 10px 0;
-            cursor: pointer;
-            padding: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-        }
-        .sidebar li:hover {
-            background-color: #d0d0d0;
-        }
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        .header {
-            background-color: #f0f0f0;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ccc;
-        }
-        .header input {
-            padding: 5px;
-            width: 200px;
-        }
-        .header button {
-            padding: 5px 10px;
-            margin-left: 5px;
-        }
-        .content {
-            margin-top: 20px;
-            flex: 1;
-        }
-        .profile-section, .study-section {
-            display: none;
-        }
-        .profile-section.active, .study-section.active {
-            display: block;
-        }
-        .profile-section form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 500px;
-        }
-        .profile-section input {
-            padding: 5px;
-        }
-        .study-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .study-item {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .study-item .profile-photo {
-            width: 150px;
-            height: 150px;
-            border-radius: 10px;
-            margin: 0 auto;
-        }
-        .study-item .profile-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border: 2px solid #ddd;
-        }
-        .study-item h3 {
-            margin: 10px 0;
-            text-align: center;
-            color: #333;
-        }
-        .study-item p {
-            margin: 5px 0;
-            color: #666;
-        }
-        .keyword-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 10px 0;
-        }
-        .keyword {
-            background-color: #e9ecef;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 14px;
-        }
-        .profile-photo {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-        .profile-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .profile-photo:hover .upload-option {
-            display: block;
-        }
-        .upload-option {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            text-align: center;
-            line-height: 50px;
-            cursor: pointer;
-        }
-        .upload-option input {
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-        @media (max-width: 600px) {
-            .container {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid #ccc;
-            }
-            .study-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Page</title>
+  <link rel="stylesheet" href="mypage.css">
+  </head>
 <body>
-    <div class="container">
-        <div class="sidebar">
-            <div class="profile-photo">
-                <img src="img/profilephoto.jpg" alt="프로필 사진">
-                <div class="upload-option" onclick="document.getElementById('profile-upload').click()">
-                    사진 다시 업로드
-                    <input type="file" id="profile-upload" accept="image/*" onchange="previewImage(event)">
-                </div>
-            </div>
-            <ul>
-                <li onclick="showSection('profile')">기본 프로필</li>
-                <li onclick="showSection('made')">내가 만든 스터디</li>
-                <li onclick="showSection('joined')">가입한 스터디</li>
-                <li onclick="showSection('loved')">북마크한 스터디</li>
-            </ul>
+  <div class="sidebar">
+    <div class="profile-photo">
+      <img src="img/profilephoto.jpg" alt="프로필 사진">
+      <div class="upload-option" onclick="document.getElementById('profile-upload').click()">
+        사진 다시 업로드
+        <input type="file" id="profile-upload" accept="image/*" onchange="previewImage(event)">
+      </div>
+    </div>
+    <h3>메뉴</h3>
+    <ul>
+      <li><a href="mainpage.html">홈</a></li>
+      <li><a href="view_study.html">전체 스터디</a></li>
+      <li><a href="register.html">등록하기</a></li>
+      <li><a href="mypage.html">마이페이지</a></li>
+      <li><a href="acceptdecline.html">신청 수락/거절</a></li>
+    </ul>
+  </div>
+
+
+  <div class="main">
+    <div class="topbar">
+      <div style="display: flex; flex-direction: column;">
+        <strong>스터디 찾기</strong>
+        <button id="sidebar-toggle" class="sidebar-toggle-btn">≡ 메뉴 열기</button>
+      </div>
+      <div class="right">
+        <div class="search-box">
+          <input type="text" placeholder="스터디를 검색하세요..." />
+          <span class="search-icon">🔍</span>
         </div>
-        <div class="main-content">
-            <div class="content">
-                <div class="profile-section" id="profile-section">
-                    <h2>기본 프로필</h2>
-                    
-                    <form id="profile-form">
-                        <label>이름: <input type="text" id="name" value="홍길동"/></label>
-                        <label>이메일: <input type="email" id="email" value="hong@example.com"/></label>
-                        <label>전화번호: <input type="tel" id="phone" value="010-1234-5678"/></label>
-                        <button type="button" onclick="saveProfile()">저장</button>
-                    </form>
-                </div>
-                <div class="study-section" id="made-section">
-                    <h2>내가 만든 스터디</h2>
-                    <div id="study-grid" class="study-grid"></div>
-                </div>
-                <div class="study-section" id="joined-section">
-                    <h2>가입한 스터디</h2>
-                    <div id="joined-grid" class="study-grid"></div>
-                </div>
-                <div class="study-section" id="loved-section">
-                    <h2>북마크한 스터디</h2>
-                    <div id="loved-grid" class="study-grid"></div>
-                </div>
-            </div>
-        </div>
+        <button class="bell-icon" id="notification-btn">🔔<span id="notification-badge"></span></button>
+        <a href="login.html"><button class="login-btn">로그인/회원가입</button></a>
+      </div>
     </div>
 
-    <script>
-        function showSection(section) {
-            document.querySelectorAll('.profile-section, .study-section').forEach(el => {
-                el.classList.remove('active');
-            });
-            document.getElementById(`${section}-section`).classList.add('active');
+    <!-- 마이페이지에서만 보이는 카테고리 바 -->
+    <div class="category-bar">
+      <button class="category-item active" onclick="showSection('profile', this)">기본 프로필</button>
+      <button class="category-item" onclick="showSection('made', this)">내가 만든 스터디</button>
+      <button class="category-item" onclick="showSection('joined', this)">가입한 스터디</button>
+      <button class="category-item" onclick="showSection('loved', this)">북마크한 스터디</button>
+    </div>
+    <div class="content">
+      <div class="profile-section" id="profile-section">
+        <h2>기본 프로필</h2>
+        <form id="profile-form">
+          <label>이름: <input type="text" id="name" value="홍길동"/></label>
+          <label>이메일: <input type="email" id="email" value="hong@example.com"/></label>
+          <label>전화번호: <input type="tel" id="phone" value="010-1234-5678"/></label>
+          <button type="button" onclick="saveProfile()">저장</button>
+        </form>
+      </div>
+      <div class="study-section" id="made-section">
+        <h2>내가 만든 스터디</h2>
+        <div id="study-grid" class="study-grid"></div>
+      </div>
+      <div class="study-section" id="joined-section">
+        <h2>가입한 스터디</h2>
+        <div id="joined-grid" class="study-grid"></div>
+      </div>
+      <div class="study-section" id="loved-section">
+        <h2>북마크한 스터디</h2>
+        <div id="loved-grid" class="study-grid"></div>
+      </div>
+    </div>
+  </div>
 
-            if (section === 'profile') {
-                loadProfile();
-            } else if (section === 'made') {
-                loadStudies();
-            }
+  <div id="notification-modal" style="display:none; position:fixed; top:70px; right:50px; z-index:9999; background:white; border:1px solid #ddd; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.15); padding:20px; min-width:280px;">
+    <div>알림</div>
+    <div>스터디원 요청이 도착했습니다.</div>
+    <button id="accept-btn">수락</button>
+    <button id="reject-btn">거절</button>
+  </div>
+
+  <script>
+    // 사이드바 프로필 사진 로드
+    const sidebarProfileImage = localStorage.getItem('sidebarProfileImage');
+    if (sidebarProfileImage) {
+      document.querySelector('.sidebar .profile-photo img').src = sidebarProfileImage;
+    }
+
+    function previewImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.querySelector('.sidebar .profile-photo img');
+          img.src = e.target.result;
+          localStorage.setItem('sidebarProfileImage', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // topbar 알림 버튼
+    document.getElementById('notification-btn').onclick = function() {
+      document.getElementById('notification-modal').innerHTML = `
+        <div>알림</div>
+        <div>스터디원 요청이 도착했습니다.</div>
+        <button id="accept-btn">수락</button>
+        <button id="reject-btn">거절</button>
+      `;
+      document.getElementById('notification-modal').style.display = 'block';
+      document.getElementById('notification-badge').style.display = 'none';
+
+      document.getElementById('accept-btn').onclick = function(){
+        document.getElementById('notification-modal').innerHTML = `
+          <div>스터디원 요청을 <b style="color:green;">수락</b>했습니다!</div>
+          <button id="close-btn">닫기</button>
+        `;
+        document.getElementById('close-btn').onclick = function() {
+          document.getElementById('notification-modal').style.display = 'none';
         }
-
-        function loadProfile() {
-            const profile = JSON.parse(localStorage.getItem('userProfile')) || { name: '홍길동', email: 'hong@example.com', phone: '010-1234-5678' };
-            document.getElementById('name').value = profile.name;
-            document.getElementById('email').value = profile.email;
-            document.getElementById('phone').value = profile.phone;
+      }
+      document.getElementById('reject-btn').onclick = function(){
+        document.getElementById('notification-modal').innerHTML = `
+          <div>스터디원 요청을 <b style="color:red;">거절</b>했습니다.</div>
+          <button id="close-btn">닫기</button>
+        `;
+        document.getElementById('close-btn').onclick = function() {
+          document.getElementById('notification-modal').style.display = 'none';
         }
+      }
+    };
 
-        function saveProfile() {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            localStorage.setItem('userProfile', JSON.stringify({ name, email, phone }));
-            alert(`프로필이 저장되었습니다!\n이름: ${name}\n이메일: ${email}\n전화번호: ${phone}`);
+    // 검색어 입력창 - 필요에 따라 기능 추가 가능
+
+    // 마이페이지 카테고리(탭) 전환
+    function showSection(section, btn) {
+      document.querySelectorAll('.profile-section, .study-section').forEach(el => el.classList.remove('active'));
+      document.getElementById(`${section}-section`).classList.add('active');
+      document.querySelectorAll('.category-item').forEach(el => el.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      if (section === 'profile') loadProfile();
+      else if (section === 'made') loadStudies();
+    }
+    function loadProfile() {
+      const profile = JSON.parse(localStorage.getItem('userProfile')) || { name: '홍길동', email: 'hong@example.com', phone: '010-1234-5678' };
+      document.getElementById('name').value = profile.name;
+      document.getElementById('email').value = profile.email;
+      document.getElementById('phone').value = profile.phone;
+    }
+    function saveProfile() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      localStorage.setItem('userProfile', JSON.stringify({ name, email, phone }));
+      alert(`프로필이 저장되었습니다!\n이름: ${name}\n이메일: ${email}\n전화번호: ${phone}`);
+    }
+    function loadStudies() {
+      const studyGrid = document.getElementById('study-grid');
+      studyGrid.innerHTML = '';
+      const studyData = JSON.parse(localStorage.getItem('studyData') || '{}');
+      const profileImage = localStorage.getItem('profileImage') || 'profilephoto.jpg';
+      const studies = studyData.groupname ? [studyData] : [];
+      if (studies.length === 0) {
+        studyGrid.innerHTML = '<p>등록된 스터디가 없습니다.</p>';
+        return;
+      }
+      studies.forEach(study => {
+        const studyItem = document.createElement('div');
+        studyItem.className = 'study-item';
+        studyItem.innerHTML = `
+          <div class="profile-photo">
+            <img src="${profileImage}" alt="스터디 커버 사진">
+          </div>
+          <h3>${study.groupname || '정보 없음'}</h3>
+          <p><strong>카테고리:</strong> ${study.category || '정보 없음'}</p>
+          <div class="keyword-container"></div>
+          <p><strong>스터디 설명:</strong> ${study.summary || '정보 없음'}</p>
+          <p><strong>이런 스터디원을 구합니다:</strong> ${study.recruit || '정보 없음'}</p>
+        `;
+        const keywordContainer = studyItem.querySelector('.keyword-container');
+        const keywords = study.keywords ? study.keywords.split(',') : [];
+        keywords.forEach(keyword => {
+          if (keyword) {
+            const keywordDiv = document.createElement('div');
+            keywordDiv.className = 'keyword';
+            keywordDiv.textContent = `#${keyword}`;
+            keywordContainer.appendChild(keywordDiv);
+          }
+        });
+        studyGrid.appendChild(studyItem);
+      });
+    }
+    // 초기 탭
+    showSection('profile', document.querySelector('.category-item'));
+    // 새 알림(임시)
+    document.getElementById('notification-badge').style.display = 'inline-block';
+    window.addEventListener('mousedown', function(e){
+      let modal = document.getElementById('notification-modal');
+      let btn = document.getElementById('notification-btn');
+      if(modal.style.display==="block" && !modal.contains(e.target) && e.target !== btn){
+        modal.style.display = "none";
+      }
+    });
+  </script>
+  <script>
+    // 페이지 로드 시 새 알림이 있다고 가정(뱃지 표시)
+    document.getElementById('notification-badge').style.display = 'inline-block';
+
+    document.getElementById('notification-btn').onclick = function() {
+      document.getElementById('notification-modal').innerHTML = `
+        <div>알림</div>
+        <div>스터디원 요청이 도착했습니다.</div>
+        <button id="accept-btn">수락</button>
+        <button id="reject-btn">거절</button>
+      `;
+      document.getElementById('notification-modal').style.display = 'block';
+      // 알림 확인시 뱃지 숨김
+      document.getElementById('notification-badge').style.display = 'none';
+
+      document.getElementById('accept-btn').onclick = function(){
+        document.getElementById('notification-modal').innerHTML = `
+          <div>스터디원 요청을 <b style="color:green;">수락</b>했습니다!</div>
+          <button id="close-btn">닫기</button>
+        `;
+        document.getElementById('close-btn').onclick = function() {
+          document.getElementById('notification-modal').style.display = 'none';
         }
-
-        function loadStudies() {
-            const studyGrid = document.getElementById('study-grid');
-            studyGrid.innerHTML = '';
-
-            // index.html에서 저장된 데이터를 로컬 스토리지에서 가져옴
-            const studyData = JSON.parse(localStorage.getItem('studyData') || '{}');
-            const profileImage = localStorage.getItem('profileImage') || 'profilephoto.jpg';
-
-            // studyData가 객체이므로 배열로 변환
-            const studies = studyData.groupname ? [studyData] : [];
-
-            if (studies.length === 0) {
-                studyGrid.innerHTML = '<p>등록된 스터디가 없습니다.</p>';
-                return;
-            }
-
-            studies.forEach(study => {
-                const studyItem = document.createElement('div');
-                studyItem.className = 'study-item';
-                studyItem.innerHTML = `
-                    <div class="profile-photo">
-                        <img src="${profileImage}" alt="스터디 커버 사진">
-                    </div>
-                    <h3>${study.groupname || '정보 없음'}</h3>
-                    <p><strong>카테고리:</strong> ${study.category || '정보 없음'}</p>
-                    <div class="keyword-container"></div>
-                    <p><strong>스터디 설명:</strong> ${study.summary || '정보 없음'}</p>
-                    <p><strong>이런 스터디원을 구합니다:</strong> ${study.recruit || '정보 없음'}</p>
-                `;
-
-                // 키워드 표시
-                const keywordContainer = studyItem.querySelector('.keyword-container');
-                const keywords = study.keywords ? study.keywords.split(',') : [];
-                keywords.forEach(keyword => {
-                    if (keyword) {
-                        const keywordDiv = document.createElement('div');
-                        keywordDiv.className = 'keyword';
-                        keywordDiv.textContent = `#${keyword}`;
-                        keywordContainer.appendChild(keywordDiv);
-                    }
-                });
-
-                studyGrid.appendChild(studyItem);
-            });
+      }
+      document.getElementById('reject-btn').onclick = function(){
+        document.getElementById('notification-modal').innerHTML = `
+          <div>스터디원 요청을 <b style="color:red;">거절</b>했습니다.</div>
+          <button id="close-btn">닫기</button>
+        `;
+        document.getElementById('close-btn').onclick = function() {
+          document.getElementById('notification-modal').style.display = 'none';
         }
+      }
+    };
 
-        function previewImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.querySelector('.profile-photo img');
-                    img.src = e.target.result;
-                    localStorage.setItem('sidebarProfileImage', e.target.result);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
+    window.addEventListener('mousedown', function(e){
+      let modal = document.getElementById('notification-modal');
+      let btn = document.getElementById('notification-btn');
+      if(modal.style.display==="block" && !modal.contains(e.target) && e.target !== btn){
+        modal.style.display = "none";
+      }
+    });
+  </script>
+  <script>
+  const sidebar = document.querySelector('.sidebar');
+  const toggleBtn = document.getElementById('sidebar-toggle');
 
-        // 사이드바 프로필 사진 로드
-        const sidebarProfileImage = localStorage.getItem('sidebarProfileImage');
-        if (sidebarProfileImage) {
-            document.querySelector('.sidebar .profile-photo img').src = sidebarProfileImage;
-        }
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+  });
 
-        // 초기 화면 설정
-        showSection('profile');
-    </script>
+  // 선택사항: 바깥 클릭 시 sidebar 닫기
+  window.addEventListener('click', (e) => {
+    if (!sidebar.contains(e.target) && e.target !== toggleBtn) {
+      sidebar.classList.remove('active');
+    }
+  });
+</script>
+
 </body>
 </html>
