@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>스터디 그룹 플랫폼</title>
+  <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="mainpage.css">
 </head>
 
@@ -13,7 +15,7 @@
     <ul>
       <li><a href="mainpage.html">홈</a></li>
       <li><a href="view_study.html">전체 스터디</a></li>
-      <li><a href="register.html">등록하기</a></li>
+      <li><a href="newStudy.html">등록하기</a></li>
       <li><a href="mypage.html">마이페이지</a></li>
       <li><a href="acceptdecline.html">신청 수락/거절</a></li>
     </ul>
@@ -36,46 +38,21 @@
     </div>
 
     <div class="category-bar">
-      <div class="category-item active">전체</div>
-      <div class="category-item">개발</div>
-      <div class="category-item">디자인</div>
-      <div class="category-item">외국어</div>
-      <div class="category-item">취업준비</div>
-      <div class="category-item">자격증</div>
-      <div class="category-item">공모전</div>
-      <div class="category-item">기타</div>
+      <botton class="category-item active">전체</botton>
+      <botton class="category-item">개발</botton>
+      <botton class="category-item">디자인</botton>
+      <botton class="category-item">외국어</botton>
+      <botton class="category-item">취업준비</botton>
+      <botton class="category-item">자격증</botton>
+      <botton class="category-item">공모전</botton>
+      <botton class="category-item">기타</botton>
     </div>
-
     <div class="content">
-      <!-- 카드 1 -->
-      <div class="study-card">
-        <div class="study-card-header">스터디 제목</div>
-    
-        <div class="study-card-body">
-          <div>이 스터디는 디자인을 공부하는 사람을 위한...</div>
-          <div class="study-save">♡</div>
-        </div>
-
-        <div class="study-card-footer">
-          <!-- 왼쪽 영역: 일정 + 태그 -->
-           <div class="left-info">
-            <div class="study-info">
-              <span class="calendar-icon">📅</span> 수·목 18:00
-              <span class="divider">|</span>
-              <span class="people-icon">👥</span> 4/7 명
-            </div>
-            <div class="study-tags">
-              <span class="study-tag">테그1</span>
-              <span class="study-tag">테그2</span>
-              <span class="study-tag">테그3</span>
-            </div>
-          </div>
-
-          <!-- 오른쪽 영역: 남은 인원 -->
-           <div class="study-people">3명 남음</div>
-        </div>
-      </div>
+      <div id="study-gallery" style="display: flex; flex-wrap: wrap; gap: 20px;"></div>
     </div>
+  </div>
+  </div>
+  </div>
 
   <div id="notification-modal">
     <div>알림</div>
@@ -88,7 +65,7 @@
     // 페이지 로드 시 새 알림이 있다고 가정(뱃지 표시)
     document.getElementById('notification-badge').style.display = 'inline-block';
 
-    document.getElementById('notification-btn').onclick = function() {
+    document.getElementById('notification-btn').onclick = function () {
       document.getElementById('notification-modal').innerHTML = `
         <div>알림</div>
         <div>스터디원 요청이 도착했습니다.</div>
@@ -99,35 +76,35 @@
       // 알림 확인시 뱃지 숨김
       document.getElementById('notification-badge').style.display = 'none';
 
-      document.getElementById('accept-btn').onclick = function(){
+      document.getElementById('accept-btn').onclick = function () {
         document.getElementById('notification-modal').innerHTML = `
           <div>스터디원 요청을 <b style="color:green;">수락</b>했습니다!</div>
           <button id="close-btn">닫기</button>
         `;
-        document.getElementById('close-btn').onclick = function() {
+        document.getElementById('close-btn').onclick = function () {
           document.getElementById('notification-modal').style.display = 'none';
         }
       }
-      document.getElementById('reject-btn').onclick = function(){
+      document.getElementById('reject-btn').onclick = function () {
         document.getElementById('notification-modal').innerHTML = `
           <div>스터디원 요청을 <b style="color:red;">거절</b>했습니다.</div>
           <button id="close-btn">닫기</button>
         `;
-        document.getElementById('close-btn').onclick = function() {
+        document.getElementById('close-btn').onclick = function () {
           document.getElementById('notification-modal').style.display = 'none';
         }
       }
     };
 
-    window.addEventListener('mousedown', function(e){
+    window.addEventListener('mousedown', function (e) {
       let modal = document.getElementById('notification-modal');
       let btn = document.getElementById('notification-btn');
-      if(modal.style.display==="block" && !modal.contains(e.target) && e.target !== btn){
+      if (modal.style.display === "block" && !modal.contains(e.target) && e.target !== btn) {
         modal.style.display = "none";
       }
     });
   </script>
-  
+
   <script>
     const categoryItems = document.querySelectorAll('.category-item');
 
@@ -142,20 +119,57 @@
   </script>
 
   <script>
-  const sidebar = document.querySelector('.sidebar');
-  const toggleBtn = document.getElementById('sidebar-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const toggleBtn = document.getElementById('sidebar-toggle');
 
-  toggleBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('active');
-  });
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
 
-  // 선택사항: 바깥 클릭 시 sidebar 닫기
-  window.addEventListener('click', (e) => {
-    if (!sidebar.contains(e.target) && e.target !== toggleBtn) {
-      sidebar.classList.remove('active');
-    }
-  });
-</script>
+    // 선택사항: 바깥 클릭 시 sidebar 닫기
+    window.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && e.target !== toggleBtn) {
+        sidebar.classList.remove('active');
+      }
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const studyList = JSON.parse(localStorage.getItem("studyList") || "[]");
+      const gallery = document.getElementById("study-gallery");
+
+      studyList.forEach(study => {
+        const timeText = Array.isArray(study.time) ? study.time.join(" · ") : study.time;
+        const tags = study.keywords ? study.keywords.split(",").map(tag => `<span class="study-tag">${tag.trim()}</span>`).join("") : "";
+
+        const card = document.createElement("div");
+        card.className = "study-card";
+
+        card.innerHTML = `
+        <div class="study-card-header">${study.groupname}</div>
+
+        <div class="study-card-body">
+          <div>${study.summary || "스터디 소개 없음"}</div>
+          <div class="study-save">♡</div>
+        </div>
+
+        <div class="study-card-footer">
+          <div class="study-info">
+            📅 ${timeText} <span class="divider">|</span> 👥 1/${study["max-people"]} 명
+          </div>
+          <div class="study-tag-list">${tags}</div>
+        </div>
+      `;
+
+        card.onclick = () => {
+          window.location.href = `details.html?id=${study.id}`;
+        };
+
+        gallery.appendChild(card);
+      });
+    });
+  </script>
 
 </body>
+
 </html>

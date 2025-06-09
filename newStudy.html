@@ -64,7 +64,7 @@
                                 <label for="groupname">스터디 이름</label>
                                 <p class="supplementary"> 쉽게 알아볼 수 있는 이름을 입력하면 다른 사용자가 찾기 편해요.</p>
                                 <input type="text" id="groupname" name="groupname" placeholder="스터디 이름을 입력하세요" required>
-                                
+
                             </div>
                             <div>
                                 <label for="category">스터디 카테고리</label>
@@ -78,14 +78,14 @@
                             </div>
                             <div>
                                 <label for="study-day"> 스터디 요일 </label>
-                                <input  type="checkbox" name="study-day" value="mon" /> 월요일
-                                <input type="checkbox" name="study-day" value="tue" /> 화요일
-                                <input type="checkbox" name="study-day" value="wed" /> 수요일
-                                <input type="checkbox" name="study-day" value="thu" /> 목요일
-                                <input type="checkbox" name="study-day" value="fri" /> 금요일
+                                <input type="checkbox" name="study-day" value="월" /> 월요일
+                                <input type="checkbox" name="study-day" value="화" /> 화요일
+                                <input type="checkbox" name="study-day" value="수" /> 수요일
+                                <input type="checkbox" name="study-day" value="목" /> 목요일
+                                <input type="checkbox" name="study-day" value="금" /> 금요일
                                 <br>
-                                <input type="checkbox" name="study-day" value="sat" /> 토요일
-                                <input type="checkbox" name="study-day" value="sun" /> 일요일
+                                <input type="checkbox" name="study-day" value="토" /> 토요일
+                                <input type="checkbox" name="study-day" value="일" /> 일요일
                             </div>
                             <br>
                             <div>
@@ -98,8 +98,9 @@
                             <div>
                                 <label for="keyword-input">스터디 최대 인원</label>
                                 <p class="supplementary"> 최소 2명부터 최대 50명까지 설정 가능해요.</p>
-                                <input type="number" id="max-people" name="max-people" min="2" max="50" placeholder="숫자만 입력해주세요" required>
-                                
+                                <input type="number" id="max-people" name="max-people" min="2" max="50"
+                                    placeholder="숫자만 입력해주세요" required>
+
                             </div>
                         </div>
                     </div>
@@ -108,8 +109,7 @@
                     <textarea id="summary" name="summary" placeholder="스터디의 목적과 간단한 설명을 작성해주세요" required></textarea>
 
                     <label for="recruit">이런 스터디원을 구합니다! 🙌</label>
-                    <textarea id="recruit" name="recruit" placeholder="어떤 사람이 참여하면 좋을지, 특징을 작성해주세요"
-                        required></textarea>
+                    <textarea id="recruit" name="recruit" placeholder="어떤 사람이 참여하면 좋을지, 특징을 작성해주세요" required></textarea>
 
                     <p>
                         <input type="submit" value="등록하기">
@@ -176,16 +176,31 @@
                 }
             }
         };
-        // 키워드 로직/등록폼 (기존)
+
+        // 새 알림(임시)
+        document.getElementById('notification-badge').style.display = 'inline-block';
+        window.addEventListener('mousedown', function (e) {
+            let modal = document.getElementById('notification-modal');
+            let btn = document.getElementById('notification-btn');
+            if (modal.style.display === "block" && !modal.contains(e.target) && e.target !== btn) {
+                modal.style.display = "none";
+            }
+        });
+    </script>
+
+    <script>
+        // ✅ 커버 이미지 저장 (스터디 대표 이미지)
         function previewImage(event) {
             const reader = new FileReader();
             reader.onload = function () {
                 const output = document.getElementById('profile-image');
                 output.src = reader.result;
-                localStorage.setItem('profileImage', reader.result);
+                localStorage.setItem('studyCoverImage', reader.result);  // ✅ 커버 이미지로 저장
             };
             reader.readAsDataURL(event.target.files[0]);
         }
+
+        // ✅ 키워드 입력 및 관리
         function addKeyword(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
@@ -202,11 +217,13 @@
                 }
             }
         }
+
         function removeKeyword(element) {
             const keywordDiv = element.parentElement;
             keywordDiv.remove();
             updateKeywords();
         }
+
         function updateKeywords() {
             const keywords = Array.from(document.querySelectorAll('.keyword .keyword-text'))
                 .map(span => span.textContent.replace('#', '').trim())
@@ -214,6 +231,8 @@
                 .join(',');
             document.getElementById('keywords').value = keywords;
         }
+
+        // ✅ 스터디 등록
         document.getElementById('study-form').addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -222,34 +241,33 @@
 
             // 복수 선택: 요일
             const daysArray = Array.from(document.querySelectorAll('input[name="study-day"]:checked'))
-                                .map(cb => cb.value);
-
+                .map(cb => cb.value);
             data.time = daysArray;
 
-            if (!data.groupname || !data.time  || !data.category || !data.summary || !data.recruit) {
+            // 유효성 검사
+            if (!data.groupname || !data.time || !data.category || !data.summary || !data.recruit) {
                 alert('모든 필드를 채워주세요!');
                 return;
             }
 
-            // 추가 정보 (실제 앱에서는 로그인 사용자 이름으로 설정)
-            data.writer = "홍길동";
-            data.mode = "대면"; // 또는 select box 활용 가능
+            // 추가 정보
+            data.writer = "홍길동";  // 로그인 연동 시 바꾸세요
+            data.mode = "대면";
+            data["max-people"] = data["max-people"];
+            data.id = Date.now();  // 고유 ID
 
-            localStorage.setItem('studyData', JSON.stringify(data));
-            alert('스터디 정보가 로컬에 저장되었습니다! "등록된 스터디 보기" 링크를 클릭하여 확인하세요.');
-        });
+            // 커버 이미지 연결
+            data.coverImage = localStorage.getItem("studyCoverImage") || "img/defaultcover.jpg";
 
-        // 새 알림(임시)
-        document.getElementById('notification-badge').style.display = 'inline-block';
-        window.addEventListener('mousedown', function (e) {
-            let modal = document.getElementById('notification-modal');
-            let btn = document.getElementById('notification-btn');
-            if (modal.style.display === "block" && !modal.contains(e.target) && e.target !== btn) {
-                modal.style.display = "none";
-            }
+            // ✅ 기존 studyList 불러오기 + 추가
+            const studyList = JSON.parse(localStorage.getItem("studyList") || "[]");
+            studyList.push(data);
+            localStorage.setItem("studyList", JSON.stringify(studyList));
+
+            alert('스터디가 등록되었습니다!');
+            window.location.href = "mainpage.html";  // 또는 상세 페이지
         });
     </script>
-
 
     <script>
         const toggleButton = document.getElementById("sidebar-toggle");
@@ -281,10 +299,6 @@
             }
         });
     </script>
-
-
-
-
 </body>
 
 </html>

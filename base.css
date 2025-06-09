@@ -3,6 +3,7 @@
    margin: 0;
    font-family: sans-serif;
    display: flex;
+   min-height: 100vh;
    background: linear-gradient(to bottom left, #E8E8E8 40%, #DFE0ED 60%, #C7CDF8 100%);
  }
 
