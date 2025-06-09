@@ -68,8 +68,9 @@
 
           <h4>이런 스터디원을 구합니다! 🙌</h4>
           <p id="recruit">모집 내용 텍스트</p>
-
-          <a href="register.html" class="back-link">스터디 등록 페이지로 돌아가기</a>
+          <br>
+          <a id="apply-button" class="apply-link">스터디 가입 신청하기</a>
+          <!--<a href="register.html" class="back-link">스터디 등록 페이지로 돌아가기</a>-->
         </div>
       </div>
     </div>
@@ -147,7 +148,8 @@
     // 로컬 저장소에서 스터디 데이터 불러오기
     document.addEventListener("DOMContentLoaded", function () { 
       const id = getQueryId();
-      const studyData = JSON.parse(localStorage.getItem('studyData') || '{}');
+      const studyList = JSON.parse(localStorage.getItem('studyList') || '{}');
+      const studyData = studyList.find(item => item.id == id);
       const profileImage = localStorage.getItem('profileImage') || 'img/profilephoto.jpg';
 
       if (!studyData) {
@@ -181,15 +183,16 @@
         }
       });
     });
-
-    // 데이터가 없는 경우 안내
-    if (!studyData.groupname) {
-      alert('저장된 스터디 정보가 없습니다. 먼저 스터디를 등록해주세요.');
-    }
-
-
     // 초기 알림 표시
     document.getElementById('notification-badge').style.display = 'inline-block';
+  </script>
+  <script>
+    document.getElementById('apply-button').addEventListener('click', function () {
+      const id = new URLSearchParams(window.location.search).get('id');
+      if (id) {
+        window.location.href = `application.html?id=${id}`;
+      }
+    });
   </script>
 </body>
 </html>

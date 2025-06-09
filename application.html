@@ -6,11 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>스터디 신청</title>
   <link rel="stylesheet" href="applicaion.css">
+  <link rel="stylesheet" href="base.css">
 </head>
-
-
-
-
 <body>
   <div class="sidebar">
     <div class="profile-photo">
@@ -46,7 +43,6 @@
       </div>
     </div>
 
-    <div class="content">
       <div class="container">
         <div class="summary-box">
           <h3 id="groupname">스터디1 <span class="like">♡</span></h3>
@@ -84,7 +80,6 @@
           <div id="result"></div>
         </div>
       </div>
-    </div>
 
     <div id="notification-modal"
       style="display:none; position:fixed; top:70px; right:50px; z-index:9999; background:white; border:1px solid #ddd; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.15); padding:20px; min-width:280px;">
@@ -183,8 +178,14 @@
           sidebar.classList.remove('active');
         }
       });
+
       document.addEventListener("DOMContentLoaded", function () {
-        const studyData = JSON.parse(localStorage.getItem('studyData') || '{}');
+        const params = new URLSearchParams(window.location.search);
+        const studyId = params.get("id");
+
+        const studyList = JSON.parse(localStorage.getItem("studyList") || "[]");
+        const studyData = studyList.find(s => s.id == studyId);
+
         const profileImage = localStorage.getItem('profileImage') || 'img/profilephoto.jpg';
 
         // 프로필 이미지

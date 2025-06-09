@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Page</title>
   <link rel="stylesheet" href="mypage.css">
-  </head>
+</head>
+
 <body>
   <div class="sidebar">
     <div class="profile-photo">
@@ -53,9 +55,9 @@
       <div class="profile-section" id="profile-section">
         <h2>기본 프로필</h2>
         <form id="profile-form">
-          <label>이름: <input type="text" id="name" value="홍길동"/></label>
-          <label>이메일: <input type="email" id="email" value="hong@example.com"/></label>
-          <label>전화번호: <input type="tel" id="phone" value="010-1234-5678"/></label>
+          <label>이름: <input type="text" id="name" value="홍길동" /></label>
+          <label>이메일: <input type="email" id="email" value="hong@example.com" /></label>
+          <label>전화번호: <input type="tel" id="phone" value="010-1234-5678" /></label>
           <button type="button" onclick="saveProfile()">저장</button>
         </form>
       </div>
@@ -74,7 +76,8 @@
     </div>
   </div>
 
-  <div id="notification-modal" style="display:none; position:fixed; top:70px; right:50px; z-index:9999; background:white; border:1px solid #ddd; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.15); padding:20px; min-width:280px;">
+  <div id="notification-modal"
+    style="display:none; position:fixed; top:70px; right:50px; z-index:9999; background:white; border:1px solid #ddd; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.15); padding:20px; min-width:280px;">
     <div>알림</div>
     <div>스터디원 요청이 도착했습니다.</div>
     <button id="accept-btn">수락</button>
@@ -92,7 +95,7 @@
       const file = event.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
           const img = document.querySelector('.sidebar .profile-photo img');
           img.src = e.target.result;
           localStorage.setItem('sidebarProfileImage', e.target.result);
@@ -102,7 +105,7 @@
     }
 
     // topbar 알림 버튼
-    document.getElementById('notification-btn').onclick = function() {
+    document.getElementById('notification-btn').onclick = function () {
       document.getElementById('notification-modal').innerHTML = `
         <div>알림</div>
         <div>스터디원 요청이 도착했습니다.</div>
@@ -112,21 +115,21 @@
       document.getElementById('notification-modal').style.display = 'block';
       document.getElementById('notification-badge').style.display = 'none';
 
-      document.getElementById('accept-btn').onclick = function(){
+      document.getElementById('accept-btn').onclick = function () {
         document.getElementById('notification-modal').innerHTML = `
           <div>스터디원 요청을 <b style="color:green;">수락</b>했습니다!</div>
           <button id="close-btn">닫기</button>
         `;
-        document.getElementById('close-btn').onclick = function() {
+        document.getElementById('close-btn').onclick = function () {
           document.getElementById('notification-modal').style.display = 'none';
         }
       }
-      document.getElementById('reject-btn').onclick = function(){
+      document.getElementById('reject-btn').onclick = function () {
         document.getElementById('notification-modal').innerHTML = `
           <div>스터디원 요청을 <b style="color:red;">거절</b>했습니다.</div>
           <button id="close-btn">닫기</button>
         `;
-        document.getElementById('close-btn').onclick = function() {
+        document.getElementById('close-btn').onclick = function () {
           document.getElementById('notification-modal').style.display = 'none';
         }
       }
@@ -196,10 +199,10 @@
     showSection('profile', document.querySelector('.category-item'));
     // 새 알림(임시)
     document.getElementById('notification-badge').style.display = 'inline-block';
-    window.addEventListener('mousedown', function(e){
+    window.addEventListener('mousedown', function (e) {
       let modal = document.getElementById('notification-modal');
       let btn = document.getElementById('notification-btn');
-      if(modal.style.display==="block" && !modal.contains(e.target) && e.target !== btn){
+      if (modal.style.display === "block" && !modal.contains(e.target) && e.target !== btn) {
         modal.style.display = "none";
       }
     });
@@ -208,7 +211,7 @@
     // 페이지 로드 시 새 알림이 있다고 가정(뱃지 표시)
     document.getElementById('notification-badge').style.display = 'inline-block';
 
-    document.getElementById('notification-btn').onclick = function() {
+    document.getElementById('notification-btn').onclick = function () {
       document.getElementById('notification-modal').innerHTML = `
         <div>알림</div>
         <div>스터디원 요청이 도착했습니다.</div>
@@ -219,49 +222,50 @@
       // 알림 확인시 뱃지 숨김
       document.getElementById('notification-badge').style.display = 'none';
 
-      document.getElementById('accept-btn').onclick = function(){
+      document.getElementById('accept-btn').onclick = function () {
         document.getElementById('notification-modal').innerHTML = `
           <div>스터디원 요청을 <b style="color:green;">수락</b>했습니다!</div>
           <button id="close-btn">닫기</button>
         `;
-        document.getElementById('close-btn').onclick = function() {
+        document.getElementById('close-btn').onclick = function () {
           document.getElementById('notification-modal').style.display = 'none';
         }
       }
-      document.getElementById('reject-btn').onclick = function(){
+      document.getElementById('reject-btn').onclick = function () {
         document.getElementById('notification-modal').innerHTML = `
           <div>스터디원 요청을 <b style="color:red;">거절</b>했습니다.</div>
           <button id="close-btn">닫기</button>
         `;
-        document.getElementById('close-btn').onclick = function() {
+        document.getElementById('close-btn').onclick = function () {
           document.getElementById('notification-modal').style.display = 'none';
         }
       }
     };
 
-    window.addEventListener('mousedown', function(e){
+    window.addEventListener('mousedown', function (e) {
       let modal = document.getElementById('notification-modal');
       let btn = document.getElementById('notification-btn');
-      if(modal.style.display==="block" && !modal.contains(e.target) && e.target !== btn){
+      if (modal.style.display === "block" && !modal.contains(e.target) && e.target !== btn) {
         modal.style.display = "none";
       }
     });
   </script>
   <script>
-  const sidebar = document.querySelector('.sidebar');
-  const toggleBtn = document.getElementById('sidebar-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const toggleBtn = document.getElementById('sidebar-toggle');
 
-  toggleBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('active');
-  });
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
 
-  // 선택사항: 바깥 클릭 시 sidebar 닫기
-  window.addEventListener('click', (e) => {
-    if (!sidebar.contains(e.target) && e.target !== toggleBtn) {
-      sidebar.classList.remove('active');
-    }
-  });
-</script>
+    // 선택사항: 바깥 클릭 시 sidebar 닫기
+    window.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && e.target !== toggleBtn) {
+        sidebar.classList.remove('active');
+      }
+    });
+  </script>
 
 </body>
+
 </html>
