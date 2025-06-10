@@ -10,78 +10,79 @@
 </head>
 
 <body>
+  <div class="navbar">
+    <div style="display: flex; flex-direction: column;">
+      <a href="main.html"><img class="logo" src="logo/Studium logo4.png"></a>
+    </div>
+    <div style="display: flex; flex-direction: column;">
+      <a href="main.html"><img class="logo" src="logo/Studium logo3.png"></a>
+    </div>
+    <div>
+      <ul class="nav-link">
+        <li><a href="about.html">About</a></li>
+        <li><a href="main.html">스터디 찾기</a></li>
+        <li><a href="newStudy.html">스터디 등록</a></li>
+        <li><a href="acceptdecline.html">스터디 관리</a></li>
+        <li><a href="mypage.html">마이페이지</a></li>
+        <!--<li ><a href="acceptdecline.html">신청 수락/거절</a></li>-->
+      </ul>
+    </div>
+    <div class="right">
+      <div class="search-box">
+        <input type="text" placeholder="스터디를 검색하세요..." />
+        <span class="search-icon">🔍</span>
+      </div>
+      <button class="bell-icon" id="notification-btn">🔔<span id="notification-badge"></span></button>
+      <div id="auth-button-container"></div>
+    </div>
+  </div>
+
   <div class="main">
-    <div class="navbar">
-      <div style="display: flex; flex-direction: column;">
-        <a href="main.html"><img class="logo" src="logo/Studium logo4.png"></a>
-      </div>
-      <div style="display: flex; flex-direction: column;">
-        <a href="main.html"><img class="logo" src="logo/Studium logo3.png"></a>
-      </div>
-      <div>
-        <ul class="nav-link">
-          <li><a href="about.html">About</a></li>
-          <li><a href="main.html">스터디 찾기</a></li>
-          <li><a href="newStudy.html">스터디 등록</a></li>
-          <li><a href="acceptdecline.html">스터디 관리</a></li>
-          <li><a href="mypage.html">마이페이지</a></li>
-          <!--<li ><a href="acceptdecline.html">신청 수락/거절</a></li>-->
-        </ul>
-      </div>
-      <div class="right">
-        <div class="search-box">
-          <input type="text" placeholder="스터디를 검색하세요..." />
-          <span class="search-icon">🔍</span>
-        </div>
-        <button class="bell-icon" id="notification-btn">🔔<span id="notification-badge"></span></button>
-        <div id="auth-button-container"></div>
-      </div>
 
-      <div class="container">
-        <div class="summary-box">
-          <h3 id="groupname">스터디1 <span class="like">♡</span></h3>
-          <div class="meta">
-            <img id="profile-image" src="" alt="작성자" />
-            <span id="meta-info">
-              <span id="writer"></span> •
-              <span id="time"></span> •
-              최대 <span id="max-people"></span>명 •
-              <span id="mode"></span>
-            </span>
+    <div class="container">
+      <div class="summary-box">
+        <h3 id="groupname">스터디1 <span class="like">♡</span></h3>
+        <div class="meta">
+          <img id="profile-image" src="" alt="작성자" />
+          <span id="meta-info">
+            <span id="writer"></span> •
+            <span id="time"></span> •
+            최대 <span id="max-people"></span>명 •
+            <span id="mode"></span>
+          </span>
+        </div>
+        <div class="tags" id="keyword-container"></div>
+
+        <div class="tags">
+          <!-- 태그들 -->
+        </div>
+      </div>
+      <div class="form-box">
+        <form id="applyForm">
+          <div class="form-left">
+            <label>이름</label>
+            <input type="text" />
+            <label>이메일</label>
+            <input type="email" />
           </div>
-          <div class="tags" id="keyword-container"></div>
-
-          <div class="tags">
-            <!-- 태그들 -->
+          <div class="form-right">
+            <label>자기소개</label>
+            <textarea></textarea>
+            <label>지원동기</label>
+            <textarea></textarea>
           </div>
-        </div>
-        <div class="form-box">
-          <form id="applyForm">
-            <div class="form-left">
-              <label>이름</label>
-              <input type="text" />
-              <label>이메일</label>
-              <input type="email" />
-            </div>
-            <div class="form-right">
-              <label>자기소개</label>
-              <textarea></textarea>
-              <label>지원동기</label>
-              <textarea></textarea>
-            </div>
-            <button type="submit">신청하기</button>
-          </form>
-          <div id="result"></div>
-        </div>
+          <button type="submit">신청하기</button>
+        </form>
+        <div id="result"></div>
       </div>
+    </div>
 
-      <div id="notification-modal"
-        style="display:none; position:fixed; top:70px; right:50px; z-index:9999; background:white; border:1px solid #ddd; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.15); padding:20px; min-width:280px;">
-        <div>알림</div>
-        <div>스터디원 요청이 도착했습니다.</div>
-        <button id="accept-btn">수락</button>
-        <button id="reject-btn">거절</button>
-      </div>
+    <div id="notification-modal"
+      style="display:none; position:fixed; top:70px; right:50px; z-index:9999; background:white; border:1px solid #ddd; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.15); padding:20px; min-width:280px;">
+      <div>알림</div>
+      <div>스터디원 요청이 도착했습니다.</div>
+      <button id="accept-btn">수락</button>
+      <button id="reject-btn">거절</button>
     </div>
   </div>
 </body>
@@ -257,28 +258,28 @@
       authContainer.appendChild(loginLink);
     }
   });
-function toggleBookmark(studyId, element) {
-  const currentUser = localStorage.getItem("currentUser");
-  if (!currentUser) {
-    alert("로그인이 필요합니다!");
-    return;
+  function toggleBookmark(studyId, element) {
+    const currentUser = localStorage.getItem("currentUser");
+    if (!currentUser) {
+      alert("로그인이 필요합니다!");
+      return;
+    }
+
+    const key = `user_bookmarks_${currentUser}`;
+    let bookmarks = JSON.parse(localStorage.getItem(key) || "[]");
+
+    if (bookmarks.includes(studyId)) {
+      bookmarks = bookmarks.filter(id => id !== studyId);
+      element.textContent = "♡";
+      element.classList.remove("active");
+    } else {
+      bookmarks.push(studyId);
+      element.textContent = "♥";
+      element.classList.add("active");
+    }
+
+    localStorage.setItem(key, JSON.stringify(bookmarks));
   }
-
-  const key = `user_bookmarks_${currentUser}`;
-  let bookmarks = JSON.parse(localStorage.getItem(key) || "[]");
-
-  if (bookmarks.includes(studyId)) {
-    bookmarks = bookmarks.filter(id => id !== studyId);
-    element.textContent = "♡";
-    element.classList.remove("active");
-  } else {
-    bookmarks.push(studyId);
-    element.textContent = "♥";
-    element.classList.add("active");
-  }
-
-  localStorage.setItem(key, JSON.stringify(bookmarks));
-}
 
 </script>
 
