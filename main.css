@@ -1,11 +1,29 @@
 * {
   box-sizing: border-box;
 }
-
+.search-wrapper {
+  
+  width: 80%; /* 사이드바를 제외한 영역 */
+  max-width: 1000px;
+  margin: 150px auto 10px auto; /* top은 navbar 고려해서 */
+  box-sizing: border-box;
+  padding: 10px 20px ;
+  overflow-x: auto;
+  justify-content: flex-start;
+  align-items: center;
+}
+.category-search {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #7987ff;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
 .category-bar {
   position:relative;
   background-color: #ffffff;
-  top: 100px;
+  top: 5px;
   text-align: center;
   border-radius: 12px;
   padding: 10px 20px ;
@@ -14,7 +32,7 @@
   justify-content: flex-start;
   align-items: center;
   gap: 8;
-  overflow-x: auto;
+  
 }
 
 .category-item {
@@ -124,6 +142,7 @@
   font-size: 11px;
   color: white;
 }
+
 
 .remaining {
   font-size: 12px;

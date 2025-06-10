@@ -7,6 +7,18 @@
   <title>스터디 그룹 플랫폼</title>
   <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="main.css">
+  <style>
+    .category-bar {
+      margin-bottom: 30px !important;
+    }
+    #study-gallery {
+      margin-top: -300px !important;  /* 이걸로 거리 조절 */
+    }
+    .content {
+      padding-top: 0px !important;   /* 너무 큰 기본 padding 제거 */
+    }
+
+  </style>
 </head>
 
 <body>
@@ -35,6 +47,9 @@
     </div>
   </div>
   <div class="main">
+    <div class="search-wrapper">
+      <input type="text" class="category-search" placeholder="스터디를 검색해보세요 🔍" />
+    </div>
     <div class="category-bar">
       <botton class="category-item active">전체</botton>
       <botton class="category-item">개발</botton>
