@@ -22,6 +22,21 @@ body {
   object-fit: cover;
 }
 
+.study-save {
+  font-size: 18px;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.study-save:hover {
+  color: #7987ff;
+}
+
+.study-save.active {
+  color: #7987ff;
+}
+
 .sidebar {
   width: 200px;
   background-color: #fcfcfc;

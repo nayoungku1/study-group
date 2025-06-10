@@ -220,6 +220,30 @@
       authContainer.appendChild(loginLink);
     }
   });
+  function toggleBookmark(studyId, element) {
+    const currentUser = localStorage.getItem("currentUser");
+    if (!currentUser) {
+      alert("로그인이 필요합니다!");
+      return;
+    }
+
+    const key = `user_bookmarks_${currentUser}`;
+    let bookmarks = JSON.parse(localStorage.getItem(key) || "[]");
+
+    if (bookmarks.includes(studyId)) {
+      bookmarks = bookmarks.filter(id => id !== studyId);
+      element.textContent = "♡";
+      element.classList.remove("active");
+    } else {
+      bookmarks.push(studyId);
+      element.textContent = "♥";
+      element.classList.add("active");
+    }
+
+    localStorage.setItem(key, JSON.stringify(bookmarks));
+  }
+
+
 </script>
 
 </html>
