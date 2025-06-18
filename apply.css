@@ -3,25 +3,24 @@
 }
 
 .container {
-  position:relative;
-  top: 100px;
-  width: 80%;
+  width: 90vw;
+  /* 기존보다 넓은 값으로 설정 */
+  max-width: 900px;
   margin: 0 auto;
-  min-height: 100vh;
-  padding: 40px 0;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px #949292;
-  border-top: 15px solid #C7CDF8
+  padding: 0px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.10);
 }
+
 
 .summary-box {
   background: white;
+  border-top: 15px solid #C7CDF8;
   padding: 24px;
-  height: 250px;
+  height: relative;
 }
+
 
 .summary-box h3 {
   display: flex;
@@ -37,7 +36,6 @@
   font-size: 14px;
   color: #666;
 }
-
 .meta img {
   width: 28px;
   height: 28px;
@@ -47,28 +45,21 @@
 .tags {
   margin-top: 12px;
   display: flex;
-  gap: 8px;
+  gap: 4px;
   flex-wrap: wrap;
 }
 
 .tags span {
-  background: #e9ecef;
+  background: #A2ABFF;
+  color:#ffff;
   padding: 4px 10px;
   border-radius: 12px;
   font-size: 13px;
 }
 
 .form-box {
-  background-color: #e4e7ff;
-  /* 연보라 */
-  display: flex;
-  padding: 24px;
-  gap: 40px;
-  width: 100%;
-  /* 혹은 max-width로 고정할 수 있음 */
-  flex-wrap: nowrap;
-  /* 줄바꿈 방지 */
-  box-sizing: border-box;
+  background: linear-gradient(to top right, #E8E8E8 20%, #DFE0ED 50%, #C7CDF8 100%);
+  padding: 30px;
 }
 
 .form-left,
@@ -104,7 +95,6 @@ button[type="submit"]:hover {
 
 #result {
   margin-top: 30px;
-  background-color: #e9ecef;
   padding: 15px;
   border-radius: 10px;
 }
