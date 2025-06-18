@@ -19,6 +19,15 @@
     body {
       line-height: 1.5;
     }
+    .caution {
+      color:#9ba2d8;
+      list-style-type: square;
+    }
+    a {
+      text-decoration: none;
+      font-weight: bold;
+      color:#666d9f;
+    }
   </style>
 
 </head>
@@ -73,6 +82,25 @@
             </ol>
           </div>
           <div>
+            <h3>🏃‍♀️ 사용방법 </h3>
+            <ol>
+              <li>왼쪽 상단 <a href="login.html">로그인/회원가입</a> 클릭</li>
+              <li><a href=sign-in">회원가입</a>하기 </li>
+              <li> <a href="mypage.html">마이페이지</a>에 가서 내 프로필이 저장된 것 확인!</li>
+              <li><a href="main.html">스터디 등록</a>에 들어가 스터디 추가 </li>
+              <li>로고 또는 스터디 찾기 클릭 시, 등록한 페이지가 떠요</li>
+              <li>스터디 클릭하면, 스터디 디테일을 볼 수 있어요</li>
+              <li>디테일페이지에서 신청하기 버튼을 누르면, 스터디 가입 신청서 작성 가능! </li>
+              <li> <a href="acceptdecline.html">스터디 관리</a>창이나 오른쪽 상단 벨모양을 누르면 내가 등록한 스터디에 신청한 사람들을 확인할 수 있어요. </li>
+              <li> 궁금한 사항이 생기면 언제든 <a href="acceptdecline.html">about</a>을 눌러주세요! </li>
+            </ol>
+             <ul class="caution">
+              <li>8번은 아직 local storage 또는 서버와 연결되지 않아 계속 고정되어 있어요!</li>
+              <li>아직은 서버에 연결되어 있지 않아, Local Storage에 모든 데이터가 저장돼요. 데이터가 날라갈 수도 있다는 점 꼭 유의해주세요.</li>
+              <li>데이터 저장 형태를 보고 싶다면, inspect > Application > Local storage에서 확인하세요. </li>
+             </ul>
+          </div>
+          <div>
             <h3>📍 Page Structure</h3>
             <ul>
               <li>About 페이지</li>
@@ -87,6 +115,9 @@
               <li>스터디 관리 페이지</li>
               <li>마이페이지 </li>
               <li>회원가입/로그인 </li>
+              <ul>
+                <li>회원가입</li>
+              </ul>
             </ul>
           </div>
         </div>
