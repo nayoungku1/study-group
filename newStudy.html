@@ -7,6 +7,16 @@
     <title>스터디 그룹 등록</title>
     <link rel="stylesheet" href="newStudy.css">
     <link rel="stylesheet" href="base.css">
+    <style>
+        .details {
+            display: flex;
+            gap: 10px;
+            text-wrap:nowrap;
+        }
+        body {
+            line-height: 1.5;
+        }
+    </style>
 </head>
 
 <body>
@@ -70,35 +80,42 @@
                                     <option value="major">전공 공부</option>
                                 </select>
                             </div>
-                            <div>
-                                <label for="study-day"> 스터디 요일 </label>
-                                <input type="checkbox" name="study-day" value="월" /> 월요일
-                                <input type="checkbox" name="study-day" value="화" /> 화요일
-                                <input type="checkbox" name="study-day" value="수" /> 수요일
-                                <input type="checkbox" name="study-day" value="목" /> 목요일
-                                <input type="checkbox" name="study-day" value="금" /> 금요일
-                                <br>
-                                <input type="checkbox" name="study-day" value="토" /> 토요일
-                                <input type="checkbox" name="study-day" value="일" /> 일요일
-                            </div>
-                            <br>
-                            <div>
-                                <label for="keyword-input">스터디 키워드</label>
-                                <input type="text" id="keyword-input" placeholder="키워드를 입력 후 Enter"
-                                    onkeypress="addKeyword(event)">
-                                <div id="keyword-container" class="keyword-container"></div>
-                                <input type="hidden" id="keywords" name="keywords">
-                            </div>
-                            <div>
-                                <label for="keyword-input">스터디 최대 인원</label>
-                                <p class="supplementary"> 최소 2명부터 최대 50명까지 설정 가능해요.</p>
-                                <input type="number" id="max-people" name="max-people" min="2" max="50"
-                                    placeholder="숫자만 입력해주세요" required>
-
-                            </div>
                         </div>
                     </div>
-
+                    <div class="details">
+                        <div>
+                            <label for="study-day"> 스터디 요일 </label>
+                            <input type="checkbox" name="study-day" value="월" /> 월요일
+                            <input type="checkbox" name="study-day" value="화" /> 화요일
+                            <input type="checkbox" name="study-day" value="수" /> 수요일
+                            <br>
+                            <input type="checkbox" name="study-day" value="목" /> 목요일
+                            <input type="checkbox" name="study-day" value="금" /> 금요일
+                            <br>
+                            <input type="checkbox" name="study-day" value="토" /> 토요일
+                            <input type="checkbox" name="study-day" value="일" /> 일요일
+                        </div>
+                        <br>
+                        <div>
+                            <label for="keyword-input">스터디 최대 인원</label>
+                            <p class="supplementary"> 최소 2명부터 최대 50명까지 설정 가능해요.</p>
+                            <input type="number" id="max-people" name="max-people" min="2" max="50"
+                                placeholder="숫자만 입력해주세요" required>
+                        </div>
+                        <div>
+                            <label for="mode"> 스터디 요일 </label>
+                            <input type="radio" name="mode" value="대면" /> 대면 <br>
+                            <input type="radio" name="mode" value="비대면" /> 비대면 <br>
+                            <input type="radio" name="mode" value="혼합" /> 혼합 <br>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="keyword-input">스터디 키워드</label>
+                        <input type="text" id="keyword-input" placeholder="키워드를 입력 후 Enter"
+                            onkeypress="addKeyword(event)">
+                        <div id="keyword-container" class="keyword-container"></div>
+                        <input type="hidden" id="keywords" name="keywords">
+                    </div>
                     <label for="summary">스터디 설명 📝 </label>
                     <textarea id="summary" name="summary" placeholder="스터디의 목적과 간단한 설명을 작성해주세요" required></textarea>
 
@@ -250,7 +267,7 @@
         const currentUser = userList.find(u => u.username === currentUsername);
 
         data.writer = currentUser;  // 로그인 연동 시 바꾸세요
-        data.mode = "대면";
+        data.mode = data["mode"];
         data["max-people"] = data["max-people"];
         data.id = Date.now();  // 고유 ID
 
