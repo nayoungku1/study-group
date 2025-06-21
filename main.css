@@ -71,8 +71,10 @@
   gap: 30px;
   justify-content: center;      /* ✅ 중앙 정렬 핵심 */
   padding: 40px 20px;
-  top:10px;
+  margin-top: 10px;
 }
+
+
 
 .study-card {
   background-color: #ffffff;
