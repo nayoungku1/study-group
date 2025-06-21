@@ -15,18 +15,19 @@
   width: 100%;
   padding: 10px 15px;
   border: 1px solid #7987ff;
-  border-radius: 8px;
+  border-radius: 30px;
   font-size: 14px;
   outline: none;
 }
 .category-bar {
   position:relative;
   width: 80%;
+  max-width: 970px;
   background-color: #ffffff;
   text-align: center;
   border-radius: 12px;
   padding: 20px 20px ;
-  margin: 20px auto 10px auto; 
+  margin: 10px auto 10px auto; 
   align-items: center;
   gap: 8;
   
