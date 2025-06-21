@@ -71,6 +71,7 @@
 
 
 input[type="email"],
+input[type="text"],
 textarea {
   margin-bottom: 16px;
   padding: 12px;
